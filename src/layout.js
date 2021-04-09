@@ -1,0 +1,81 @@
+import React from 'react'
+import { Layout, Menu, Breadcrumb } from 'antd';
+import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+
+import { Route } from "react-router-dom";
+import { HashRouter } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
+import Home from './bisection';
+
+import Home2 from './home2';
+
+import './css/layout.css';
+
+const { SubMenu } = Menu;
+const { Header, Content, Footer, Sider } = Layout;
+class Lay extends React.Component {
+    render() {
+        return (
+            <HashRouter>
+                
+                <Layout>
+                    <Header className="header">
+                        <div className="logo" />
+                        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                            <div className="numer">
+                                Numer
+                            </div>
+                        </Menu>
+                    </Header>
+                    <Layout>
+                        <Sider width={200} className="site-layout-background">
+                            <Menu
+                                mode="inline"
+                                defaultSelectedKeys={['1']}
+                                defaultOpenKeys={['sub1']}
+                                style={{ height: '100%', borderRight: 0 }}
+                                className="menu"
+                            >
+                                <SubMenu key="sub1"  title="Root of equation" className="menu">
+                                    <Menu.Item key="1"><Link to='/bisection'>Bisection</Link></Menu.Item>
+                                    <Menu.Item key="2"><Link to='/home2'>False-Position</Link></Menu.Item>
+                                    <Menu.Item key="3">option3</Menu.Item>
+                                    <Menu.Item key="4">option4</Menu.Item>
+                                </SubMenu>
+                                <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
+                                    <Menu.Item key="5">option5</Menu.Item>
+                                    <Menu.Item key="6">option6</Menu.Item>
+                                    <Menu.Item key="7">option7</Menu.Item>
+                                    <Menu.Item key="8">option8</Menu.Item>
+                                </SubMenu>
+                                <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
+                                    <Menu.Item key="9">option9</Menu.Item>
+                                    <Menu.Item key="10">option10</Menu.Item>
+                                    <Menu.Item key="11">option11</Menu.Item>
+                                    <Menu.Item key="12">option12</Menu.Item>
+                                </SubMenu>
+                            </Menu>
+                        </Sider>
+                        
+                            <Content
+                                className="site-layout-background"
+                                style={{
+                                    padding: 24,
+                                    margin: 0,
+                                    minHeight: 657,
+                                }}
+                            >
+                                <Route exact path='/bisection' component={Home}></Route>
+                                <Route exact path='/home2' component={Home2}></Route>
+                            </Content>
+                        
+                    </Layout>
+                </Layout>
+
+
+            </HashRouter>
+        );
+    }
+}
+export default Lay

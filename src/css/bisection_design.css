@@ -1,0 +1,17 @@
+    .gg {
+
+        width: 200px;
+        outline: none;
+        color: white;
+        border-radius: 24px;
+        margin: 15px;
+        text-align: center;
+        border: 3px solid lightgreen;
+    }
+    .button1{
+        margin: 15px;
+        width: 120px;
+        border-radius: 24px;
+        
+
+    }
