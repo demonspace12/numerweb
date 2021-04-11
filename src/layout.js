@@ -6,7 +6,9 @@ import { Route } from "react-router-dom";
 import { HashRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
-import Home from './bisection';
+
+
+import Bisection from './componentjs/Bisection';
 
 import Home2 from './home2';
 
@@ -38,7 +40,7 @@ class Lay extends React.Component {
                                 className="menu"
                             >
                                 <SubMenu key="sub1"  title="Root of equation" className="menu">
-                                    <Menu.Item key="1"><Link to='/bisection'>Bisection</Link></Menu.Item>
+                                    <Menu.Item key="1"><Link to='/componentjs/Bisection'>Bisection</Link></Menu.Item>
                                     <Menu.Item key="2"><Link to='/home2'>False-Position</Link></Menu.Item>
                                     <Menu.Item key="3">option3</Menu.Item>
                                     <Menu.Item key="4">option4</Menu.Item>
@@ -66,7 +68,7 @@ class Lay extends React.Component {
                                     minHeight: 657,
                                 }}
                             >
-                                <Route exact path='/bisection' component={Home}></Route>
+                                <Route exact path='/componentjs/Bisection' component={Bisection}></Route>
                                 <Route exact path='/home2' component={Home2}></Route>
                             </Content>
                         
