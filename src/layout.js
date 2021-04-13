@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 import Bisection from './componentjs/Bisection';
 import false_po from './componentjs/False_position';
+import One_point from './componentjs/One_point';
 
 import Home2 from './home2';
 
@@ -43,7 +44,7 @@ class Lay extends React.Component {
                                 <SubMenu key="sub1"  title="Root of equation" className="menu" >
                                     <Menu.Item key="1"><Link to='/componentjs/Bisection'>Bisection</Link></Menu.Item>
                                     <Menu.Item key="2"><Link to='/componentjs/False_position'>False-Position</Link></Menu.Item>
-                                    <Menu.Item key="3">option3</Menu.Item>
+                                    <Menu.Item key="3"><Link to='/componentjs/One_point'></Link> One-point iteration</Menu.Item>
                                     <Menu.Item key="4">option4</Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
@@ -71,6 +72,7 @@ class Lay extends React.Component {
                             >
                                 <Route exact path='/componentjs/Bisection' component={Bisection}></Route>
                                 <Route exact path='/componentjs/False_position' component={false_po}></Route>
+                                <Route exact path='/componentjs/One_point' component={One_point}></Route>
                             </Content>
                         
                     </Layout>

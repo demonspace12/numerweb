@@ -7,15 +7,22 @@ class false_po extends React.Component{
     render(){
         return(
             <div>
-                <h2>False-Position</h2>
+                <h1 className='bisechead'>Bisection</h1>
                 <div>
-                    <Input placeholder="Basic usage" />
+                    <span> FX :</span>
+                    <span><Input placeholder="Basic usage"  onChange={this.getFX}/></span>
                 </div>
                 <div>
-                <Input placeholder="Basic usage"  />
-                <Input placeholder="Basic usage"  />
-                <Input placeholder="Basic usage"  /><br />
-                <Button size="large" type="primary" >คำนวน</Button>
+                    <span> XL :</span>
+                    <span><Input placeholder="Basic usage"  onChange={this.getXL}/></span>
+                    <span> XR :</span>
+                    <span><Input placeholder="Basic usage"  onChange={this.getXR}/></span>
+                    <span> ERROR :</span>
+                    <span><Input placeholder="Basic usage"  onChange={this.getERROR}/></span><br />
+                    <span><Button size="large" type="primary" className="button1" onClick={this.Calculate}>คำนวน</Button></span>
+                </div>
+                <div>
+                    {this.state.result}
                 </div>
             </div>
         );
