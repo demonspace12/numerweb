@@ -11,10 +11,12 @@ import { Link } from "react-router-dom";
 import Bisection from './componentjs/Bisection';
 import false_po from './componentjs/False_position';
 import One_point from './componentjs/One_point';
+import Cramer_r from './componentjs/Cramer_r';
 
 import Home2 from './home2';
 
 import './css/layout.css';
+//import { import } from 'mathjs';
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -47,8 +49,8 @@ class Lay extends React.Component {
                                     <Menu.Item key="3"><Link to='/componentjs/One_point'></Link> One-point iteration</Menu.Item>
                                     <Menu.Item key="4">option4</Menu.Item>
                                 </SubMenu>
-                                <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
-                                    <Menu.Item key="5">option5</Menu.Item>
+                                <SubMenu key="sub2" icon={<LaptopOutlined />} title="matrix">
+                                    <Menu.Item key="5"><Link to='/componentjs/Cramer_r'></Link>Cramer</Menu.Item>
                                     <Menu.Item key="6">option6</Menu.Item>
                                     <Menu.Item key="7">option7</Menu.Item>
                                     <Menu.Item key="8">option8</Menu.Item>
@@ -73,6 +75,7 @@ class Lay extends React.Component {
                                 <Route exact path='/componentjs/Bisection' component={Bisection}></Route>
                                 <Route exact path='/componentjs/False_position' component={false_po}></Route>
                                 <Route exact path='/componentjs/One_point' component={One_point}></Route>
+                                <Route exact path='/componentjs/Cramer_r' component={Cramer_r}></Route>
                             </Content>
                         
                     </Layout>

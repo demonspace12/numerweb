@@ -4,6 +4,35 @@ import { Button } from 'antd';
 import { Input } from 'antd';
 
 class false_po extends React.Component{
+    state = {
+        XL: "1.5", XR: "2.0", ERROR: "0.000001", result: "", FX: "X^4-13"
+
+    }
+    getFX = e => {
+        this.setState({
+            FX: e.target.value,
+        });
+    }
+    getXL = e => {
+        this.setState({
+            XL: e.target.value,
+        });
+    }
+    getXR = e => {
+        this.setState({
+            XR: e.target.value,
+        });
+    }
+    getERROR = e => {
+        this.setState({
+            ERROR: e.target.value,
+        });
+    }
+    Calculate = e => {
+        this.setState({
+            
+        });
+    }
     render(){
         return(
             <div>

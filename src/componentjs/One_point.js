@@ -12,13 +12,13 @@ class One_point extends React.Component {
             <div>
                 <h2 className='bisechead'>One-point iteration</h2>
                 <div>
-                    <Input placeholder="Basic usage" className="gg" />
+                    <Input placeholder="Basic usage"  />
                 </div>
                 <div>
-                <Input placeholder="Basic usage" className="gg" />
-                <Input placeholder="Basic usage" className="gg" />
-                <Input placeholder="Basic usage" className="gg" /><br />
-                <Button size="large" type="primary" className="button1">คำนวน</Button>
+                <Input placeholder="Basic usage"  />
+                <Input placeholder="Basic usage"  />
+                <Input placeholder="Basic usage"  /><br />
+                <Button size="large" type="primary" >คำนวน</Button>
                 </div>
             </div>
 
