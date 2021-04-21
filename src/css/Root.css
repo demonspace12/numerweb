@@ -1,0 +1,45 @@
+.gg {
+
+    width: 200px;
+    outline: none;
+    color: black;
+    margin: 8px;
+    text-align: center;
+    border: 3px solid lightgreen;
+   /*  background: none;
+    color: white; */
+}
+.button1{
+    margin: 15px;
+    width: 120px;
+    background-color: #2ecc71;
+    outline: #2ecc71;
+    border-radius: 3px;
+
+    
+
+}
+/* span{
+    color: white;
+} */
+.bisechead{
+    text-align: center;
+    font-size:30px;
+  
+}
+/* h1{
+    color: white;
+} */
+.body{
+    display: flex;
+}
+.result{
+    margin-left: 40px;
+    margin-top: 10px;
+    /* color: white; */
+}
+table,tr,th,td{
+    border:#2ecc71 1px solid;
+    background-color: black;
+    color: white;
+}

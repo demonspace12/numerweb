@@ -1,8 +1,23 @@
 .menu{
-    background-color: #49498D;
-    color: white;
-    
+    background-color: black;
+    /* background-color: #34495e; */
+    color: white;  
+}
+.drop{
+    background-color: black;
+    color: white; 
+}
+.menu:hover{
+    color:#fff;
 }
 .design{
     height: 100%;
 }
+.numer{
+    font-size: 30px;
+    color: #fff;
+    
+}
+/* .bg{
+    background-color: black;
+} */

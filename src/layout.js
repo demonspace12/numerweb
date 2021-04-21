@@ -43,7 +43,7 @@ class Lay extends React.Component {
                                 style={{ height: '100%', borderRight: 0 }}
                                 className="menu"
                             >
-                                <SubMenu key="sub1"  title="Root of equation" className="menu" >
+                                <SubMenu key="sub1"  title="Root of equation" className="menu">
                                     <Menu.Item key="1"><Link to='/componentjs/Bisection'>Bisection</Link></Menu.Item>
                                     <Menu.Item key="2"><Link to='/componentjs/False_position'>False-Position</Link></Menu.Item>
                                     <Menu.Item key="3"><Link to='/componentjs/One_point'></Link> One-point iteration</Menu.Item>
@@ -65,7 +65,7 @@ class Lay extends React.Component {
                         </Sider>
                         
                             <Content
-                                className="site-layout-background"
+                                className="site-layout-background bg"
                                 style={{
                                     padding: 24,
                                     margin: 0,

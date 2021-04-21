@@ -2,9 +2,10 @@ import React from 'react'
 
 import { Button } from 'antd';
 import { Input } from 'antd';
-import {calBisection} from './Rootcal';
+import { calBisection } from './Rootcal';
+import '../css/Root.css'
 
-import '../css/bisection_design.css'
+
 
 
 class Bisection extends React.Component {
@@ -34,7 +35,7 @@ class Bisection extends React.Component {
     }
     Calculate = e => {
         this.setState({
-            result: calBisection(this.state.FX,this.state.XL,this.state.XR,this.state.ERROR)
+            result: calBisection(this.state.FX, this.state.XL, this.state.XR, this.state.ERROR)
         });
     }
 
@@ -45,21 +46,31 @@ class Bisection extends React.Component {
 
             <div>
                 <h1 className='bisechead'>Bisection</h1>
-                <div>
-                    <span> FX :</span>
-                    <span><Input placeholder="Basic usage" className="gg" onChange={this.getFX}/></span>
-                </div>
-                <div>
-                    <span> XL :</span>
-                    <span><Input placeholder="Basic usage" className="gg" onChange={this.getXL}/></span>
-                    <span> XR :</span>
-                    <span><Input placeholder="Basic usage" className="gg" onChange={this.getXR}/></span>
-                    <span> ERROR :</span>
-                    <span><Input placeholder="Basic usage" className="gg" onChange={this.getERROR}/></span><br />
-                    <span><Button size="large" type="primary" className="button1" onClick={this.Calculate}>คำนวน</Button></span>
-                </div>
-                <div>
-                    {this.state.result}
+                <div className='body'>
+                    <div>
+                        <span> FX :</span><br />
+                        <span><Input placeholder="X^4-13" className="gg" onChange={this.getFX} /></span><br />
+                        <span> XL :</span><br />
+                        <span><Input placeholder="1.5" className="gg" onChange={this.getXL} /></span><br />
+                        <span> XR :</span><br />
+                        <span><Input placeholder="2.0" className="gg" onChange={this.getXR} /></span><br />
+                        <span> ERROR :</span><br />
+                        <span><Input placeholder="0.000001" className="gg" onChange={this.getERROR} /></span><br />
+                        <span><Button size="large" type="primary" className="button1" onClick={this.Calculate}>คำนวน</Button></span>
+                    </div>
+                    <div className='result'>
+                        {/* <table>
+                            <tr>
+                                <th>I</th>
+                                <th>xm</th>
+                                <th>er</th>
+                            </tr>
+                            
+                            {this.state.result}
+                            
+                        </table> */}
+                        {this.state.result}
+                    </div>
                 </div>
             </div>
 
