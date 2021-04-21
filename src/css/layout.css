@@ -1,5 +1,5 @@
 .menu{
-    background-color: black;
+    background-color: #001529;
     /* background-color: #34495e; */
     color: white;  
 }
@@ -16,6 +16,9 @@
 .numer{
     font-size: 30px;
     color: #fff;
+    text-align: left;
+    padding: 1px 6px;
+    border:2px solid #2ecc71;
     
 }
 /* .bg{

@@ -5,19 +5,15 @@
     color: black;
     margin: 8px;
     text-align: center;
-    border: 3px solid lightgreen;
+    border: 3px solid #2ecc71;
+    border-radius: 5px;
    /*  background: none;
     color: white; */
 }
 .button1{
     margin: 15px;
     width: 120px;
-    background-color: #2ecc71;
-    outline: #2ecc71;
-    border-radius: 10px;
-
-    
-
+  border-radius: 10px;  
 }
 /* span{
     color: white;

@@ -102,3 +102,143 @@ export function fasepositioncal( init_xl, init_xr, init_error,init_fx){
 
     return data;
 }
+export function onepointcal(initialEquation ,initialX,initialError){
+    let equation =checkEquation(initialEquation)
+    equation = math.parse(equation).compile()
+     
+     let X = math.bignumber(initialX)
+
+     let error = math.bignumber(initialError)
+     
+     let arr = []
+
+     let i = 1;
+     
+     
+     let oldX = 0;
+
+     let checkError = 1
+     let oldcheckError = 2;
+     while(checkError > error){
+
+        
+         X  = equation.evaluate({x : X})
+
+         checkError =  math.abs((X - oldX)/X);
+         if(i>3&&(checkError > oldcheckError)){
+            arr.push(<div>ลู่ออก</div>)
+            break;
+        }
+          oldcheckError = checkError;
+        
+         oldX = X
+         
+        
+        arr.push(<div>i :{i} iterration :{i.toString()} x:  {X.toFixed(15).toString()} error : {checkError.toFixed(15).toString()}</div>)
+        i++
+        
+     }
+     return arr
+}
+export function Newtoncal(initialEquation, initialX, initialError) {
+
+    let equation = checkEquation(initialEquation)
+
+    equation = math.parse(equation)
+    let X = math.bignumber(initialX)
+
+    let fXprime = math.derivative(equation,'x').compile()
+    
+   
+    let error = math.bignumber(initialError)
+
+    
+
+    let arr = []
+
+    let i = 1;
+
+
+    let oldX = X;
+
+    let checkError = 9999
+    let oldcheckError = 9999;
+    while (checkError > error) {
+
+        let fXdiff = fXprime.evaluate({x : X})
+        let fX = equation.evaluate({ x: X })
+        X = math.subtract(X, math.divide(fX, fXdiff))
+
+
+
+        checkError = math.abs((X - oldX) / X);
+        if ((checkError > oldcheckError)&&i>3) {
+            arr.push(<div>ลู่ออก</div>)
+            break;
+        }
+        oldcheckError = checkError;
+
+        oldX = X
+
+        arr.push(<div>iteration: {i.toString()} x: {X.toFixed(15).toString()} error: {checkError.toFixed(15).toString()} </div>)
+        
+        i++
+
+    }
+    return arr
+}
+export function Secantcal(initialEquation, initialX0,initialX1, initialError) {
+
+    let equation = checkEquation(initialEquation)
+
+    equation = math.parse(equation).compile()
+    let x0 = math.bignumber(initialX0)
+    let x1 = math.bignumber(initialX1)
+
+
+   let fx0 = equation.evaluate({x:x0})
+   let fx1 = equation.evaluate({x:x1})
+    
+   
+    let error = math.bignumber(initialError)
+
+    
+
+    let arr = []
+
+    let i = 1;
+
+
+    let oldX = 0;
+
+    let checkError = 9999
+    let oldcheckError = 9999;
+    while (checkError > error) {
+
+    let    x = math.subtract(x1 , math.divide(math.multiply(fx1,math.subtract(x0 , x1) ), math.subtract(fx0 , fx1)));
+            
+            checkError = Math.abs((x - x1)/x);
+            
+            fx0 = fx1;
+            x0 = x1;
+            x1 = x;
+            fx1 = equation.evaluate({x : x1})
+
+
+       
+        if (checkError > oldcheckError) {
+            arr.push(<div>ลู่ออก</div>)
+            break;
+        }
+        oldcheckError = checkError;
+
+        
+
+        arr.push(<div>iteration: {i.toString()} x: {x.toFixed(15).toString()} error: {checkError.toFixed(15).toString()}</div>)
+       
+        i++
+
+    }
+    
+    return arr
+}
