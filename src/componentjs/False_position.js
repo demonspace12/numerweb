@@ -43,18 +43,19 @@ class false_po extends React.Component {
     render() {
         return (
             <div>
-                <h1 className='bisechead'>Bisection</h1>
-                <div className='body'>
+                
+                <div className='box'>
+                <h1 className='bisechead'>False-Position</h1>
                     <div>
                         <span> FX :</span><br />
-                        <span><Input placeholder="43x-1" className="gg" onChange={this.getFX} /></span><br />
+                        <span><Input placeholder="43x-1" className="data" onChange={this.getFX} /></span><br />
                         <span> XL :</span><br />
-                        <span><Input placeholder="0.0" className="gg" onChange={this.getXL} /></span><br />
+                        <span><Input placeholder="0.0" className="data" onChange={this.getXL} /></span><br />
                         <span> XR :</span><br />
-                        <span><Input placeholder="0.3" className="gg" onChange={this.getXR} /></span><br />
+                        <span><Input placeholder="0.3" className="data" onChange={this.getXR} /></span><br />
                         <span> ERROR :</span><br />
-                        <span><Input placeholder="0.000001" className="gg" onChange={this.getERROR} /></span><br />
-                        <span><Button size="large" type="primary" className="button1" onClick={this.Calculate}>คำนวน</Button></span>
+                        <span><Input placeholder="0.000001" className="data" onChange={this.getERROR} /></span><br />
+                        <span><Button size="large" type="primary" className="button1" onClick={this.Calculate}>คำนวณ</Button></span>
                     </div>
                     <div className='result'>
                         {this.state.result}

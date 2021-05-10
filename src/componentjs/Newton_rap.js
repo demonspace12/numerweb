@@ -36,16 +36,17 @@ class Newton_r extends React.Component{
     render(){
         return(
             <div>
+                
+                <div className='box'>
                 <h1 className='bisechead'>Newton Raphon</h1>
-                <div className='body'>
                     <div>
                         <span> FX :</span><br />
-                        <span><Input placeholder="x^2 - 7" className="gg" onChange={this.getFX} /></span><br />
+                        <span><Input placeholder="x^2 - 7" className="data" onChange={this.getFX} /></span><br />
                         <span> In X :</span><br />
-                        <span><Input placeholder="2" className="gg" onChange={this.getInx} /></span><br />
+                        <span><Input placeholder="2" className="data" onChange={this.getInx} /></span><br />
                         <span> ERROR :</span><br />
-                        <span><Input placeholder="0.000001" className="gg" onChange={this.getERROR} /></span><br />
-                        <span><Button size="large" type="primary" className="button1" onClick={this.Calculate}>คำนวน</Button></span>
+                        <span><Input placeholder="0.000001" className="data" onChange={this.getERROR} /></span><br />
+                        <span><Button size="large" type="primary" className="button1" onClick={this.Calculate}>คำนวณ</Button></span>
                     </div>
                     <div className='result'>
                         {this.state.result}

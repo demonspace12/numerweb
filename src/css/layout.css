@@ -18,9 +18,20 @@
     color: #fff;
     text-align: left;
     padding: 1px 6px;
-    border:2px solid #2ecc71;
+   
     
 }
-/* .bg{
-    background-color: black;
-} */
+.header{
+    text-align: center;
+}
+ .bg{
+    background-color: #34495e;
+    /* background-color: #fff; */
+} 
+/* li.ant-menu-item{
+ background-color:chartreuse;
+}
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color:fuchsia;
+}
+  */

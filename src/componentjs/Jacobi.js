@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { Button,Input } from 'antd';
-import {  Row ,Col  } from 'antd';
-import {MatrixInputA,MatrixInputB} from './matrix/input_matrix'
-import {Cramercal} from './Rootcal'
+import { Button, Input } from 'antd';
+import { Row, Col } from 'antd';
+import { MatrixInputA, MatrixInputB } from './matrix/input_matrix'
 
-class Cramer_r extends React.Component {
+import { Jacobical } from './Rootcal'
+
+class Jacobi extends React.Component {
     state =
         {
             n: 2,
@@ -16,6 +17,11 @@ class Cramer_r extends React.Component {
             apiData: [],
             hasData: false
         }
+    getERROR = e => {
+        this.setState({
+            ERROR: e.target.value,
+        });
+    }
     OnChangeMatrixA = e => {
         let changedArr = this.state.matrixA
         let index = e.target.name.split('_')
@@ -48,37 +54,40 @@ class Cramer_r extends React.Component {
 
     onPoom = e => {
         this.setState({
-            result: Cramercal(this.state.n, this.state.matrixA, this.state.matrixB)
+            result: Jacobical(this.state.n, this.state.matrixA, this.state.matrixB, this.state.ERROR)
+
         });
     }
     render() {
 
         return (
             <div>
-                
+
                 <div className='box'>
-                <h1 className='bisechead'>Cramer Rule</h1>
+                    <h1 className='bisechead'>Jacobi</h1>
                     <div>
                         <Button onClick={this.onClickDel} >Del</Button>
                         <Input className='sizeshow' value = {this.state.n} />
-                        
-                        <Button onClick={this.onClickAdd}>Add</Button><br/>
+                       
+                        <Button onClick={this.onClickAdd}>Add</Button>
                         <div className='flex'>
                             <div>
-                            <div className='top'>matrixB</div>
-                            
-                            <MatrixInputA  n={this.state.n} onChange={this.OnChangeMatrixA} value={this.state.matrixA} />
-                            </div>
-                            <div className ='setmatrix'>
                                 <div className='top'>matrixB</div>
-                            
-                            <MatrixInputB  n={this.state.n} onChange={this.OnChangeMatrixB} value={this.state.matrixB} />
+
+                                <MatrixInputA n={this.state.n} onChange={this.OnChangeMatrixA} value={this.state.matrixA} />
+                            </div>
+                            <div className='setmatrix'>
+                                <div className='top'>matrixB</div>
+
+                                <MatrixInputB n={this.state.n} onChange={this.OnChangeMatrixB} value={this.state.matrixB} />
                             </div>
                         </div>
-                        <span><Button size="large" type="primary" className='button1' onClick={this.onPoom}>คำนวณ</Button></span>
-                        
-                       
+                        ERROR :
+                        <span><Input placeholder="0.000001" onChange={this.getERROR} className="Input_3" value={this.state.ERROR} /></span>
+                        <span><Button size="large" className='button1' type="primary" onClick={this.onPoom}>คำนวณ</Button></span>
+                     
                         <div>
+
                             {this.state.result}
                         </div>
                     </div>
@@ -90,4 +99,4 @@ class Cramer_r extends React.Component {
 
     }
 }
-export default Cramer_r
+export default Jacobi

@@ -7,13 +7,13 @@
     text-align: center;
     border: 3px solid #2ecc71;
     border-radius: 5px;
-   /*  background: none;
-    color: white; */
+    background: none;
+    color: white;
 }
 .button1{
-    margin: 15px;
+    margin: 15px 0;
     width: 120px;
-  border-radius: 10px;  
+  border-radius: 4px;  
 }
 /* span{
     color: white;
@@ -26,16 +26,78 @@
 /* h1{
     color: white;
 } */
-.body{
+/* .body{
     display: flex;
-}
+} */
 .result{
-    margin-left: 40px;
+    margin-left: 15px;
     margin-top: 10px;
     /* color: white; */
+}
+table{
+    width: 100%;
 }
 table,tr,th,td{
     border:#2ecc71 1px solid;
     background-color: black;
     color: white;
+}
+.box{
+  width: 70%;
+  padding: 40px;
+  margin-left: 15%;
+  margin-top: 30px;
+  /* background: black; */
+  background: #e6f7ff;
+  
+}
+.calculate{
+    margin-top: 10px;
+    
+}
+.flex{
+    display: flex;
+    margin-top: 10px;
+}
+.center{
+    margin-left: 25%;
+}
+th,td{
+    padding: 5px 10px;
+}
+.color{
+    background-color: #34495e;
+}
+.data{
+    /* background: none; */
+    /* border: 3px solid #2ecc71; */
+    margin-top: 5px;
+}
+.matrixA{
+    width: 50px;
+   margin-right: 5px;
+}
+.matrixB{
+    width: 50px;
+    margin-right: 5px;
+}
+.setmatrix{
+    margin-left: 40px;
+}
+.text{
+    padding: 6px;
+    margin-left: 5px;
+}
+.top{
+    margin-bottom: 5px;
+}
+.ad{
+    width: 80px;
+    margin-right: 5px;
+    margin-bottom: 8px;
+}
+.sizeshow{
+    width: 50px;
+    margin: 0 5px;
+    text-align: center;
 }

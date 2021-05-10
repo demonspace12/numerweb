@@ -44,34 +44,40 @@ class Bisection extends React.Component {
     render() {
         return (
 
-            <div>
-                <h1 className='bisechead'>Bisection</h1>
-                <div className='body'>
+            <div className='color'>
+               
+                <div className='box'>
                     <div>
-                        <span> FX :</span><br />
-                        <span><Input placeholder="X^4-13" className="gg" onChange={this.getFX} /></span><br />
-                        <span> XL :</span><br />
-                        <span><Input placeholder="1.5" className="gg" onChange={this.getXL} /></span><br />
-                        <span> XR :</span><br />
-                        <span><Input placeholder="2.0" className="gg" onChange={this.getXR} /></span><br />
-                        <span> ERROR :</span><br />
-                        <span><Input placeholder="0.000001" className="gg" onChange={this.getERROR} /></span><br />
-                        <span><Button size="large" type="primary" className="button1" onClick={this.Calculate}>คำนวน</Button></span>
+                    <h1 className='bisechead'>Bisection</h1>
+                        <div>
+                            
+                            <span> FX :</span>
+                            <span><Input className='data' placeholder="X^4-13" onChange={this.getFX} /></span><br />
+                            <span> XL :</span><br />
+                            <span><Input placeholder="1.5" className='data'  onChange={this.getXL} /></span><br />
+                        </div>
+                        <div>
+                            <span> XR :</span><br />
+                            <span><Input className='data' placeholder="2.0"  onChange={this.getXR} /></span><br />
+                            <span> ERROR :</span><br />
+                            <span><Input className='data' placeholder="0.000001"  onChange={this.getERROR} /></span><br />
+                           
+                        </div>
+                        <div className='calculate'>
+                            <span><Button  size="large" type="primary" className="button1" onClick={this.Calculate}>คำนวณ</Button></span>
+                            
+                        </div>
                     </div>
                     <div className='result'>
-                        {/* <table>
-                            <tr>
-                                <th>I</th>
-                                <th>xm</th>
-                                <th>er</th>
-                            </tr>
+                        <table>
                             
                             {this.state.result}
                             
-                        </table> */}
-                        {this.state.result}
+                        </table>
+                        
                     </div>
                 </div>
+                
             </div>
 
         );
