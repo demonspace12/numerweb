@@ -124,7 +124,7 @@ class Bisection extends React.Component {
                         </div>
                     </div>
                     <div className='result'>
-                        <table>
+                        <table className='table'>
                             
                             {this.state.result}
                             

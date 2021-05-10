@@ -43,10 +43,10 @@ export function calBisection  (initialEquation ,initialXL,initialXR,initialError
     let oldXm = xm;
 
     let i = 0;
-    arr.push(<tr>
-        <th>I</th>
-        <th>xm</th>
-        <th>er</th>
+    arr.push(<tr className='table'>
+        <th className='table'>I</th>
+        <th className='table'>xm</th>
+        <th className='table'>er</th>
     </tr>)
     while(checkError > error){
 
@@ -70,7 +70,7 @@ export function calBisection  (initialEquation ,initialXL,initialXR,initialError
         
         
         /* arr.push(<div> {i}  :{xm.toFixed(15).toString()}Error:{checkError.toFixed(15).toString()}</div>) */
-        arr.push(<tr><td>{i+1}</td><td>{xm.toFixed(15).toString()}</td><td>{checkError.toFixed(15).toString()}</td></tr>)
+        arr.push(<tr className='table'><td className='table'>{i+1}</td><td className='table'>{xm.toFixed(15).toString()}</td><td>{checkError.toFixed(15).toString()}</td></tr>)
         i++;
     
     }
