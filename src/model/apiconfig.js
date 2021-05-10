@@ -2,7 +2,7 @@ const config = {
     "swagger": "2.0",
     "info": {
         "description" : "API Document By Swagger. จัดทำหน้านี้ขึ้นเพื่อรวบรวม API ที่ใช้บนเว็บไซต์นี้",
-        "title": "Swagger Numerical Method"
+        "title": "Swagger"
     },
     "host": "my-json-server.typicode.com/demonspace12/numerweb",
     

@@ -2,7 +2,7 @@ import React from 'react'
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
 import {config} from './apiconfig'
-class Swagersee extends React.Component{
+class Swagers extends React.Component{
 
     render(){
 
@@ -14,4 +14,4 @@ class Swagersee extends React.Component{
     }
 }
 
-export default Swagersee
+export default Swagers

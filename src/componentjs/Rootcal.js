@@ -716,10 +716,10 @@ export function calNewtondevide( initialMatrix1, initialPoint,initialX) {
     
 
     let arr = []
-    let ans = []
-    ans.push(<tr>
-        <th>ค่าที่ต้องการหา</th>
-        <th>result</th>
+    let result = []
+    result.push(<tr className= 'table'>
+        <th className='table'>ค่าที่ต้องการหา</th>
+        <th className='table'>result</th>
         
     </tr>)
    
@@ -732,10 +732,9 @@ export function calNewtondevide( initialMatrix1, initialPoint,initialX) {
 
    
 
-    //ans.push({key :  1 ,fx : 'f('+X+')' , valuex : findX(X) })
-   /* ans.push(<div className ="result">f({X})={findX(X)}</div>) */
-   ans.push(<tr><td>f({X})</td><td>{findX(X)}</td></tr>)
-   return ans
+    
+   result.push(<tr className='table'><td className='table'>f({X})</td><td className='table'>{findX(X)}</td></tr>)
+   return result
 }
 
 export function calLagrange(initialMatrix1,initialPoint,initialX){

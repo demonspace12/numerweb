@@ -20,13 +20,13 @@ import Ludecom from './componentjs/Ludecom';
 import Jacobi from './componentjs/Jacobi';
 import Gauss_seidel from './componentjs/Guass_seidel';
 import Conjugate from './componentjs/Conjugate';
-import Newton_devide from './componentjs/์Newton_devide';
+import Newton_devide from './componentjs/Newton_devide';
 import Lagrange from './componentjs/Lagrange';
 import Spline from './componentjs/Spline';
 import Linear from './componentjs/Linear';
 import Polynomial from './componentjs/Polynomial';
 import Multiple from './componentjs/Multiple';
-import Swagersee from './model/swager'
+import Swagers from './model/swager'
 
 
 
@@ -122,7 +122,7 @@ class Lay extends React.Component {
                             <Route exact path='/componentjs/Linear' component={Linear}></Route>
                             <Route exact path='/componentjs/Polynomial' component={Polynomial}></Route>
                             <Route exact path='/componentjs/Multiple' component={Multiple}></Route>
-                            <Route exact path='/model/swager' component={Swagersee}></Route>
+                            <Route exact path='/model/swager' component={Swagers}></Route>
                         </Content>
 
                     </Layout>
