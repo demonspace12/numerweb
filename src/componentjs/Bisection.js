@@ -107,15 +107,15 @@ class Bisection extends React.Component {
                         <div>
                             
                             <span> FX :</span>
-                            <span><Input className='data' placeholder="X^4-13" onChange={this.getFX} value = {this.state.FX} /></span><br />
+                            <span><Input className='data' placeholder="X^4-13" onChange={this.getFX} value = {this.state.FX} required /></span><br />
                             <span> XL :</span><br />
-                            <span><Input placeholder="1.5" className='data'  onChange={this.getXL} /></span><br />
+                            <span><Input placeholder="1.5" className='data'  onChange={this.getXL} value={this.state.XL} required /></span><br />
                         </div>
                         <div>
                             <span> XR :</span><br />
-                            <span><Input className='data' placeholder="2.0"  onChange={this.getXR} /></span><br />
+                            <span><Input className='data' placeholder="2.0"  onChange={this.getXR} value={this.state.XR}  required/></span><br />
                             <span> ERROR :</span><br />
-                            <span><Input className='data' placeholder="0.000001"  onChange={this.getERROR} /></span><br />
+                            <span><Input className='data' placeholder="0.000001"  onChange={this.getERROR} value={this.state.ERROR} required/></span><br />
                            
                         </div>
                         <div className='calculate'>

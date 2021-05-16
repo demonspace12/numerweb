@@ -4,7 +4,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 
 import { Route } from "react-router-dom";
 import { HashRouter } from 'react-router-dom';
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 
 
 
@@ -27,10 +27,10 @@ import Linear from './componentjs/Linear';
 import Polynomial from './componentjs/Polynomial';
 import Multiple from './componentjs/Multiple';
 import Swagers from './model/swager'
-
-
+import Home from './componentjs/Home';
 
 import './css/layout.css';
+
 
 
 
@@ -54,12 +54,15 @@ class Lay extends React.Component {
 
                             <Menu
                                 mode="inline"
-                                defaultSelectedKeys={['1']}
+                                defaultSelectedKeys={['0']}
                                 defaultOpenKeys={['sub1']}
                                 style={{ height: '100%', borderRight: 0 }}
                                 className="menu"
                                 theme="dark"
                             >
+                                <Menu.Item key="0" ><Link to='/componentjs/Home'></Link>
+                                        Home
+                                </Menu.Item>
                                 <SubMenu key="sub1" title="Root of equation" className="menu">
                                     <Menu.Item key="1"><Link to='/componentjs/Bisection'>Bisection</Link></Menu.Item>
                                     <Menu.Item key="2"><Link to='/componentjs/False_position'>False-Position</Link></Menu.Item>
@@ -103,7 +106,7 @@ class Lay extends React.Component {
                                 minHeight: 720,
                             }}
                         >
-
+                            {<Redirect exact from="/" to="/componentjs/Home" />}
                             <Route exact path='/componentjs/Bisection' component={Bisection}></Route>
                             <Route exact path='/componentjs/False_position' component={false_po}></Route>
                             <Route exact path='/componentjs/One_point' component={One_point}></Route>
@@ -123,6 +126,8 @@ class Lay extends React.Component {
                             <Route exact path='/componentjs/Polynomial' component={Polynomial}></Route>
                             <Route exact path='/componentjs/Multiple' component={Multiple}></Route>
                             <Route exact path='/model/swager' component={Swagers}></Route>
+                            <Route exact path='/componentjs/Home' component={Home}></Route>
+                            
                         </Content>
 
                     </Layout>

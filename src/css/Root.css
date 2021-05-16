@@ -111,3 +111,29 @@ th,td{
 .swager{
     background-color: #fff;
 }
+.web{
+    text-align: center;
+    border: chartreuse 3px solid;
+    font-size: 40px;
+    background-color: black;
+    color: #fff;
+    margin-top: 130px;
+    width: 50%;
+    height: 70px;
+    margin-left: 25%;
+
+}
+.name{
+    text-align: center;
+    border: chartreuse 3px solid;
+    font-size: 35px;
+    background-color: black;
+    color: #fff;
+    margin-top: 40px;
+    margin-left: 15%;
+    width: 70%;
+    height: 70px;
+}
+.homeweb{
+    text-align: center;
+}

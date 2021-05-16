@@ -1,40 +1,40 @@
-const math=require("mathjs");
+const math = require("mathjs");
 var interpolationQuadratic_Poly_linear = require('interpolating-polynomial')
 const Spline = require('cubic-spline');
 var regression = require('regression')
-function checkEquation (equation){
-    equation = equation.replaceAll('X','x')
+function checkEquation(equation) {
+    equation = equation.replaceAll('X', 'x')
 
     return equation
 }
-export function copyArray(n,matrix1){
+export function copyArray(n, matrix1) {
     let arr = []
-     for(let i = 0;i < n ; i++){
-         arr.push([])
-         arr[i] = [].concat(matrix1[i])
-     }
-     return arr;
- 
- }
-export function calBisection  (initialEquation ,initialXL,initialXR,initialError) {
+    for (let i = 0; i < n; i++) {
+        arr.push([])
+        arr[i] = [].concat(matrix1[i])
+    }
+    return arr;
+
+}
+export function calBisection(initialEquation, initialXL, initialXR, initialError) {
     let equation = checkEquation(initialEquation)
-        equation = math.parse(equation).compile()
-    let  xl = math.bignumber(initialXL)
+    equation = math.parse(equation).compile()
+    let xl = math.bignumber(initialXL)
     let xr = math.bignumber(initialXR)
     let error = math.bignumber(initialError)
 
 
     let arr = []
-    
 
-    let xm = math.divide(math.add(xl,xr),2)
 
-    let fx = math.multiply(equation.evaluate({x :xm}),equation.evaluate({x :xr}))
+    let xm = math.divide(math.add(xl, xr), 2)
 
-    if(fx < 0){
+    let fx = math.multiply(equation.evaluate({ x: xm }), equation.evaluate({ x: xr }))
+
+    if (fx < 0) {
         xl = xm;
     }
-    else{
+    else {
         xr = xm;
     }
 
@@ -46,116 +46,128 @@ export function calBisection  (initialEquation ,initialXL,initialXR,initialError
     arr.push(<tr className='table'>
         <th className='table'>I</th>
         <th className='table'>xm</th>
-        <th className='table'>er</th>
+        <th className='table'>ERROR</th>
     </tr>)
-    while(checkError > error){
+    while (checkError > error) {
 
-        xm = math.divide(math.add(xl,xr),2)
+        xm = math.divide(math.add(xl, xr), 2)
 
-        fx = math.multiply(equation.evaluate({x :xm}),equation.evaluate({x :xr}))
+        fx = math.multiply(equation.evaluate({ x: xm }), equation.evaluate({ x: xr }))
 
-        if(fx < 0){
+        if (fx < 0) {
             xl = xm;
         }
-        else{
+        else {
             xr = xm;
         }
-        checkError = Math.abs((xm-oldXm)/xm);
+        checkError = Math.abs((xm - oldXm) / xm);
 
         oldXm = xm;
 
-      
+
         //arr.push({key : i , iteration : i.toString() ,xm : xm.toFixed(15).toString() ,error : checkError.toFixed(15).toString()})
-       
-        
-        
+
+
+
         /* arr.push(<div> {i}  :{xm.toFixed(15).toString()}Error:{checkError.toFixed(15).toString()}</div>) */
-        arr.push(<tr className='table'><td className='table'>{i+1}</td><td className='table'>{xm.toFixed(15).toString()}</td><td>{checkError.toFixed(15).toString()}</td></tr>)
+        arr.push(<tr className='table'><td className='table'>{i + 1}</td><td className='table'>{xm.toFixed(15).toString()}</td><td className='table'>{checkError.toFixed(15).toString()}</td></tr>)
         i++;
-    
+
     }
-    return(arr);
+    return (arr);
 }
-export function fasepositioncal( init_xl, init_xr, init_error,init_fx){
+export function fasepositioncal(init_xl, init_xr, init_error, init_fx) {
 
     init_fx = checkEquation(init_fx);
-    let data=[];
+    let data = [];
+    data.push(<tr className='table'>
+        <th className='table'>I</th>
+        <th className='table'>xm</th>
+        <th className='table'>ERROR</th>
+    </tr>)
     let fx = math.parse(init_fx).compile()
     let xl = math.bignumber(init_xl)
     let xr = math.bignumber(init_xr)
     let er = math.bignumber(init_error)
-    let fxl = fx.evaluate({x:xl});
-    let fxr = fx.evaluate({x:xr});
-    let x = math.divide(math.subtract(math.multiply(xl,fxr),math.multiply(xr,fxl)),math.subtract(fxr,fxl));
-    let num =math.multiply(fx.evaluate({x:x}),fxr);
+    let fxl = fx.evaluate({ x: xl });
+    let fxr = fx.evaluate({ x: xr });
+    let x = math.divide(math.subtract(math.multiply(xl, fxr), math.multiply(xr, fxl)), math.subtract(fxr, fxl));
+    let num = math.multiply(fx.evaluate({ x: x }), fxr);
     let tmp_er = 9999999;
     let new_x = 0;
-    let i =1;
+    let i = 1;
 
-    if(num>0){
+    if (num > 0) {
         xr = x;
     }
-    else if(num<0){
+    else if (num < 0) {
         xl = x;
     }
 
-    while(tmp_er > er){
-        fxr = fx.evaluate({x:xr});
-        fxl = fx.evaluate({x:xl});
-        new_x = math.divide(math.subtract(math.multiply(xl,fxr),math.multiply(xr,fxl)),math.subtract(fxr,fxl));
-        num = math.multiply(fx.evaluate({x:x}),fxr);
-        if(num>0){
+    while (tmp_er > er) {
+        fxr = fx.evaluate({ x: xr });
+        fxl = fx.evaluate({ x: xl });
+        new_x = math.divide(math.subtract(math.multiply(xl, fxr), math.multiply(xr, fxl)), math.subtract(fxr, fxl));
+        num = math.multiply(fx.evaluate({ x: x }), fxr);
+        if (num > 0) {
             xr = new_x;
         }
-        else if(num<0){
+        else if (num < 0) {
             xl = new_x;
         }
-        tmp_er = math.abs(math.divide(math.subtract(new_x,x),new_x))
+        tmp_er = math.abs(math.divide(math.subtract(new_x, x), new_x))
         x = new_x;
-        data.push(<div>{i}: z is {x.toFixed(15).toString()}</div>)
+        /* data.push(<div>{i}: z is {x.toFixed(15).toString()}</div>) */
+        data.push(<tr className='table'><td className='table'>{i}</td><td className='table'>{x.toFixed(15).toString()}</td><td className='table'>{tmp_er.toFixed(15).toString()}</td></tr>)
         i++;
     }
 
 
     return data;
 }
-export function onepointcal(initialEquation ,initialX,initialError){
-    let equation =checkEquation(initialEquation)
+export function onepointcal(initialEquation, initialX, initialError) {
+    let equation = checkEquation(initialEquation)
     equation = math.parse(equation).compile()
-     
-     let X = math.bignumber(initialX)
 
-     let error = math.bignumber(initialError)
-     
-     let arr = []
+    let X = math.bignumber(initialX)
 
-     let i = 1;
-     
-     
-     let oldX = 0;
+    let error = math.bignumber(initialError)
 
-     let checkError = 1
-     let oldcheckError = 2;
-     while(checkError > error){
+    let arr = []
+    arr.push(<tr className='table'>
+        <th className='table'>I</th>
+        <th className='table'>X</th>
+        <th className='table'>ERROR</th>
+    </tr>)
 
-        
-         X  = equation.evaluate({x : X})
+    let i = 1;
 
-         checkError =  math.abs((X - oldX)/X);
-         if(i>3&&(checkError > oldcheckError)){
+
+    let oldX = 0;
+
+    let checkError = 1
+    let oldcheckError = 2;
+    while (checkError > error) {
+
+
+        X = equation.evaluate({ x: X })
+
+        checkError = math.abs((X - oldX) / X);
+        if (i > 3 && (checkError > oldcheckError)) {
             arr.push(<div>ลู่ออก</div>)
             break;
         }
-          oldcheckError = checkError;
-        
-         oldX = X
-         
-        
-        arr.push(<div>i :{i} iterration :{i.toString()} x:  {X.toFixed(15).toString()} error : {checkError.toFixed(15).toString()}</div>)
+        oldcheckError = checkError;
+
+        oldX = X
+
+
+        /* arr.push(<div>i :{i} iterration :{i.toString()} x:  {X.toFixed(15).toString()} error : {checkError.toFixed(15).toString()}</div>) */
+        arr.push(<tr className='table'><td className='table'>{i}</td><td className='table'>{X.toFixed(15).toString()}</td><td className='table'>{checkError.toFixed(15).toString()}</td></tr>)
         i++
-        
-     }
-     return arr
+
+    }
+    return arr
 }
 export function Newtoncal(initialEquation, initialX, initialError) {
 
@@ -164,15 +176,19 @@ export function Newtoncal(initialEquation, initialX, initialError) {
     equation = math.parse(equation)
     let X = math.bignumber(initialX)
 
-    let fXprime = math.derivative(equation,'x').compile()
-    
-   
+    let fXprime = math.derivative(equation, 'x').compile()
+
+
     let error = math.bignumber(initialError)
 
-    
+
 
     let arr = []
-
+    arr.push(<tr className='table'>
+        <th className='table'>I</th>
+        <th className='table'>X</th>
+        <th className='table'>ERROR</th>
+    </tr>)
     let i = 1;
 
 
@@ -182,14 +198,14 @@ export function Newtoncal(initialEquation, initialX, initialError) {
     let oldcheckError = 9999;
     while (checkError > error) {
 
-        let fXdiff = fXprime.evaluate({x : X})
+        let fXdiff = fXprime.evaluate({ x: X })
         let fX = equation.evaluate({ x: X })
         X = math.subtract(X, math.divide(fX, fXdiff))
 
 
 
         checkError = math.abs((X - oldX) / X);
-        if ((checkError > oldcheckError)&&i>3) {
+        if ((checkError > oldcheckError) && i > 3) {
             arr.push(<div>ลู่ออก</div>)
             break;
         }
@@ -197,14 +213,14 @@ export function Newtoncal(initialEquation, initialX, initialError) {
 
         oldX = X
 
-        arr.push(<div>iteration: {i.toString()} x: {X.toFixed(15).toString()} error: {checkError.toFixed(15).toString()} </div>)
-        
+        /* arr.push(<div>iteration: {i.toString()} x: {X.toFixed(15).toString()} error: {checkError.toFixed(15).toString()} </div>) */
+        arr.push(<tr className='table'><td className='table'>{i.toString()}</td><td className='table'>{X.toFixed(15).toString()}</td><td className='table'>{checkError.toFixed(15).toString()}</td></tr>)
         i++
 
     }
     return arr
 }
-export function Secantcal(initialEquation, initialX0,initialX1, initialError) {
+export function Secantcal(initialEquation, initialX0, initialX1, initialError) {
 
     let equation = checkEquation(initialEquation)
 
@@ -213,16 +229,20 @@ export function Secantcal(initialEquation, initialX0,initialX1, initialError) {
     let x1 = math.bignumber(initialX1)
 
 
-   let fx0 = equation.evaluate({x:x0})
-   let fx1 = equation.evaluate({x:x1})
-    
-   
+    let fx0 = equation.evaluate({ x: x0 })
+    let fx1 = equation.evaluate({ x: x1 })
+
+
     let error = math.bignumber(initialError)
 
-    
+
 
     let arr = []
-
+    arr.push(<tr className='table'>
+        <th className='table'>I</th>
+        <th className='table'>X</th>
+        <th className='table'>ERROR</th>
+    </tr>)
     let i = 1;
 
 
@@ -232,197 +252,217 @@ export function Secantcal(initialEquation, initialX0,initialX1, initialError) {
     let oldcheckError = 9999;
     while (checkError > error) {
 
-    let    x = math.subtract(x1 , math.divide(math.multiply(fx1,math.subtract(x0 , x1) ), math.subtract(fx0 , fx1)));
-            
-            checkError = Math.abs((x - x1)/x);
-            
-            fx0 = fx1;
-            x0 = x1;
-            x1 = x;
-            fx1 = equation.evaluate({x : x1})
+        let x = math.subtract(x1, math.divide(math.multiply(fx1, math.subtract(x0, x1)), math.subtract(fx0, fx1)));
+
+        checkError = Math.abs((x - x1) / x);
+
+        fx0 = fx1;
+        x0 = x1;
+        x1 = x;
+        fx1 = equation.evaluate({ x: x1 })
 
 
-       
+
         if (checkError > oldcheckError) {
             arr.push(<div>ลู่ออก</div>)
             break;
         }
         oldcheckError = checkError;
 
-        
 
-        arr.push(<div>iteration: {i.toString()} x: {x.toFixed(15).toString()} error: {checkError.toFixed(15).toString()}</div>)
-       
+
+        /* arr.push(<div className="result">iteration: {i.toString()} x: {x.toFixed(15).toString()} error: {checkError.toFixed(15).toString()}</div>) */
+        arr.push(<tr className='table'><td className='table'>{i.toString()}</td><td className='table'>{x.toFixed(15).toString()}</td><td>{checkError.toFixed(15).toString()}</td></tr>)
         i++
 
     }
-    
+
     return arr
 }
+
+
+
+
+
 export function Cramercal(n, initialMatrix1, initialMatrix2) {
 
-    let matrix1=math.bignumber(initialMatrix1)
-    let matrix2=math.bignumber(initialMatrix2)
+    let matrix1 = math.bignumber(initialMatrix1)
+    let matrix2 = math.bignumber(initialMatrix2)
     let det_matrixA = math.det(matrix1)
-    
-    let temp_matrix1 = copyArray(n,matrix1)
+
+    let temp_matrix1 = copyArray(n, matrix1)
 
     let arr = []
-
+    arr.push(<tr className='table'>
+        <th className='table'>ตัวเเปรที่หา</th>
+        <th className='table'>Result</th>
+    </tr>)
     let X = [];
-    
-    
 
 
-        for (let i = 0; i < n; i++) { 
 
-            for (let j = 0; j < n; j++) { 
-                temp_matrix1[j][i] = matrix2[j]  
-            }
-            X[i] = math.divide(math.det(temp_matrix1) , det_matrixA).toFixed(15).toString()
-            
-            //arr.push({key : i , x : 'X'+(i+1) ,valuex : X[i]})
-            arr.push(<div> X{i+1} = {X[i]}</div>)
 
-            temp_matrix1 = copyArray(n,matrix1);
+    for (let i = 0; i < n; i++) {
+
+        for (let j = 0; j < n; j++) {
+            temp_matrix1[j][i] = matrix2[j]
         }
-        
+        X[i] = math.divide(math.det(temp_matrix1), det_matrixA).toFixed(3).toString()
+
+        //arr.push({key : i , x : 'X'+(i+1) ,valuex : X[i]})
+        /*  arr.push(<div> X{i+1} = {X[i]}</div>) */
+        arr.push(<tr className='table'><td className='table'> X{i + 1}</td><td className='table'>{X[i]}</td></tr>)
+        temp_matrix1 = copyArray(n, matrix1);
+    }
+
     return arr
 }
 export function Eliminationcal(n, initialMatrix1, initialMatrix2) {
 
-    let matrix1=initialMatrix1
-    let matrix2=initialMatrix2
-    
-    
-    
+    let matrix1 = initialMatrix1
+    let matrix2 = initialMatrix2
+
+
+
     let arr = []
+    arr.push(<tr className='table'>
+        <th className='table'>ตัวเเปรที่หา</th>
+        <th className='table'>Result</th>
+    </tr>)
     let X = []
-    
-    for(let i = 0 ; i < n ; i++){
-        matrix1[i].push(matrix2[i]) 
+
+    for (let i = 0; i < n; i++) {
+        matrix1[i].push(matrix2[i])
         X.push(1)
     }
     console.log(matrix1)
-   
-    for(let i = 1;i < n ; i++){
-        for(let j = i ;j < n ; j++){
 
-            let divide = matrix1[i-1][i-1]
-            let multi = matrix1[j][i-1]
+    for (let i = 1; i < n; i++) {
+        for (let j = i; j < n; j++) {
 
-            for(let k = i-1 ; k < n+1;k++){
-                matrix1[j][k] = matrix1[j][k] - ((matrix1[i-1][k]/divide)*multi)
-                
+            let divide = matrix1[i - 1][i - 1]
+            let multi = matrix1[j][i - 1]
+
+            for (let k = i - 1; k < n + 1; k++) {
+                matrix1[j][k] = matrix1[j][k] - ((matrix1[i - 1][k] / divide) * multi)
+
             }
-    
+
         }
-         
+
     }
 
-    for(let i = n-1 ;i >= 0 ; i--){
+    for (let i = n - 1; i >= 0; i--) {
         let sum = 0;
-        for(let j = 0 ; j < n ;j++){
-            sum = sum + matrix1[i][j]*X[j];
+        for (let j = 0; j < n; j++) {
+            sum = sum + matrix1[i][j] * X[j];
         }
         sum = sum - matrix1[i][i]
-        X[i] = ((matrix1[i][n] - sum)/matrix1[i][i])
-        
-    }
-   // X.map((x,i) => arr.push({key : i , x : 'X'+(i+1) , valuex : x.toFixed(5)}))
-    X.map((x,i) => arr.push(<div>x{i+1}= {x.toFixed(15)}</div>))
+        X[i] = ((matrix1[i][n] - sum) / matrix1[i][i])
 
-        
+    }
+    // X.map((x,i) => arr.push({key : i , x : 'X'+(i+1) , valuex : x.toFixed(5)}))
+    /* X.map((x,i) => arr.push(<div>x{i+1}= {x.toFixed(15)}</div>)) */
+    X.map((x, i) => arr.push(<tr className='table'><td className='table'> x{i + 1}</td><td className='table'>{x.toFixed(15)}</td></tr>))
+
     return arr
 }
 export function Jordancal(n, initialMatrix1, initialMatrix2) {
 
-    let matrix1=initialMatrix1
-    let matrix2=initialMatrix2
-    
-    
-    
+    let matrix1 = initialMatrix1
+    let matrix2 = initialMatrix2
+
+
+
     let arr = []
+    arr.push(<tr className='table'>
+        <th className='table'>ตัวเเปรที่หา</th>
+        <th className='table'>Result</th>
+    </tr>)
     let X = []
-    
-    for(let i = 0 ; i < n ; i++){
-        matrix1[i].push(matrix2[i]) 
+
+    for (let i = 0; i < n; i++) {
+        matrix1[i].push(matrix2[i])
         X.push(1)
     }
     console.log(matrix1)
-   
-    for(let i = 1;i < n ; i++){
-        for(let j = i ;j < n ; j++){
 
-            let divide = matrix1[i-1][i-1]
-            let multi = matrix1[j][i-1]
+    for (let i = 1; i < n; i++) {
+        for (let j = i; j < n; j++) {
 
-            for(let k = i-1 ; k < n+1;k++){
-                matrix1[j][k] = matrix1[j][k] - ((matrix1[i-1][k]/divide)*multi)
-              
+            let divide = matrix1[i - 1][i - 1]
+            let multi = matrix1[j][i - 1]
+
+            for (let k = i - 1; k < n + 1; k++) {
+                matrix1[j][k] = matrix1[j][k] - ((matrix1[i - 1][k] / divide) * multi)
+
             }
-    
+
         }
-         
+
     }
-    for(let i = n-2;i >= 0 ; i--){
-        for(let j = i ;j >= 0 ; j--){
+    for (let i = n - 2; i >= 0; i--) {
+        for (let j = i; j >= 0; j--) {
 
-            let divide = matrix1[i+1][i+1]
-            let multi = matrix1[j][i+1]
+            let divide = matrix1[i + 1][i + 1]
+            let multi = matrix1[j][i + 1]
 
-            for(let k = n ; k >= i;k--){
-                matrix1[j][k] = matrix1[j][k] - ((matrix1[i+1][k]/divide)*multi)
-              
+            for (let k = n; k >= i; k--) {
+                matrix1[j][k] = matrix1[j][k] - ((matrix1[i + 1][k] / divide) * multi)
+
             }
-    
+
         }
-         
+
     }
 
-    for(let i = 0 ;i < n ; i++){
-        X[i] = ((matrix1[i][n] )/matrix1[i][i])
+    for (let i = 0; i < n; i++) {
+        X[i] = ((matrix1[i][n]) / matrix1[i][i])
     }
-       
-      
-        
-    
+
+
+
+
     //X.map((x,i) => arr.push({key : i , x : 'X'+(i+1) , valuex : x.toFixed(5)}))
-    X.map((x,i) => arr.push(<div>x{i+1}= {x.toFixed(15)}</div>))
+    /*  X.map((x,i) => arr.push(<div>x{i+1}= {x.toFixed(15)}</div>)) */
+    X.map((x, i) => arr.push(<tr className='table'><td className='table'> x{i + 1}</td><td className='table'>{x.toFixed(15)}</td></tr>))
 
-        
     return arr
 }
 export function Ludecompocal(n, initialMatrix1, initialMatrix2) {
 
     let A = initialMatrix1
     let B = initialMatrix2
-  
+
     let arr = []
+    arr.push(<tr className='table'>
+        <th className='table'>ตัวเเปรที่หา</th>
+        <th className='table'>Result</th>
+    </tr>)
     let U = []
     let L = []
     let Y = []
     let X = []
-    
+
     for (let i = 0; i < n; i++) {
-            U.push([])
-            L.push([])
-            Y.push(1)
-            X.push(1)
+        U.push([])
+        L.push([])
+        Y.push(1)
+        X.push(1)
         for (let j = 0; j < n; j++) {
-            L[i][j]=0
-            if(i == j){
-                U[i][j]= 1
+            L[i][j] = 0
+            if (i == j) {
+                U[i][j] = 1
             }
-            else{
-                
-                U[i][j]=0
+            else {
+
+                U[i][j] = 0
             }
-               
+
         }
     }
- 
-    
+
+
     for (let i = 0; i < n; i++) {
 
         for (let j = 0; j < n; j++) {
@@ -448,8 +488,8 @@ export function Ludecompocal(n, initialMatrix1, initialMatrix2) {
             }
         }
     }
-   
-    
+
+
     for (let i = 0; i < n; i++) {
         let sum = 0;
         for (let j = 0; j < n; j++) {
@@ -459,9 +499,9 @@ export function Ludecompocal(n, initialMatrix1, initialMatrix2) {
         sum = sum - L[i][i] * Y[i];
 
         Y[i] = ((B[i] - sum) / L[i][i])
-        
+
     }
-    for (let i = n-1; i >= 0; i--) {
+    for (let i = n - 1; i >= 0; i--) {
         let sum = 0;
         for (let j = 0; j < n; j++) {
 
@@ -472,195 +512,206 @@ export function Ludecompocal(n, initialMatrix1, initialMatrix2) {
         X[i] = ((Y[i] - sum) / U[i][i])
 
     }
-    
-  
-    //X.map((x, i) => arr.push({ key: i, x: 'X' + (i + 1), valuex: x.toFixed(5) }))
-    X.map((x,i) => arr.push(<div className ="result">x{i+1}= {x.toFixed(15)}</div>))
 
+
+    //X.map((x, i) => arr.push({ key: i, x: 'X' + (i + 1), valuex: x.toFixed(5) }))
+    /* X.map((x,i) => arr.push(<div className ="result">x{i+1}= {x.toFixed(15)}</div>)) */
+    X.map((x, i) => arr.push(<tr className='table'><td className='table'> x{i + 1}</td><td className='table'>{x.toFixed(15)}</td></tr>))
     return arr
 }
-export function Jacobical(n, initialMatrix1, initialMatrix2,initialError) {
+export function Jacobical(n, initialMatrix1, initialMatrix2, initialError) {
     //รอแก้
-   
+
     let check = true;
-    let matrix1=initialMatrix1
-    let matrix2=initialMatrix2
-    
+    let matrix1 = initialMatrix1
+    let matrix2 = initialMatrix2
+
     let error = initialError
 
-  
-    
+
+
     let arr = []
-    arr.push(<div className = "ontopresult"> คำตอบของการคำนวนคือ</div>)
+    arr.push(<tr className='table'>
+    <th className='table'>ตัวเเปรที่หา</th>
+    <th className='table'>Result</th>
+</tr>)
     let resultX = []
     let ansX = []
-    
-    let arr_Error = []
-    for(let i = 0 ; i < n ;i++){
-        resultX.push(0)
-        
-    }
-    
-    while(check){
 
-       
-        
-        
-        for(let i = 0;i <  n ;i++){
+    let arr_Error = []
+    for (let i = 0; i < n; i++) {
+        resultX.push(0)
+
+    }
+
+    while (check) {
+
+
+
+
+        for (let i = 0; i < n; i++) {
             let sum = matrix2[i]
-            for(let j = 0;j < n;j++){
-                if(i != j){
-                    
-                   
-                    sum = (sum- (matrix1[i][j]*resultX[j]))
-                    
-                    
-                    
+            for (let j = 0; j < n; j++) {
+                if (i != j) {
+
+
+                    sum = (sum - (matrix1[i][j] * resultX[j]))
+
+
+
                 }
-                
+
             }
-            
-            
-            ansX[i] = sum/matrix1[i][i];
-            
-            
-          
-            arr_Error[i] = math.abs((ansX[i]-resultX[i])/ansX[i])
-            
+
+
+            ansX[i] = sum / matrix1[i][i];
+
+
+
+            arr_Error[i] = math.abs((ansX[i] - resultX[i]) / ansX[i])
+
             console.log(arr_Error[i])
-            
-           
+
+
         }
         resultX = [...ansX]
         check = false
-        for(let i = 0 ; i < n ; i++){
-            if(arr_Error[i] > error){
-               check = true
-               break;
+        for (let i = 0; i < n; i++) {
+            if (arr_Error[i] > error) {
+                check = true
+                break;
             }
-          
-            
-        }
-       
-    
-    }
-    for(let i = 0 ; i < n ; i++){
-        //arr.push({key : i , x : 'X'+(i+1) , valuex : resultX[i].toFixed(5)})
-        arr.push(<div className ="result">X{i+1}={resultX[i].toFixed(15)}</div>)
-    }
-     
 
-        
+
+        }
+
+
+    }
+    for (let i = 0; i < n; i++) {
+        //arr.push({key : i , x : 'X'+(i+1) , valuex : resultX[i].toFixed(5)})
+        /* arr.push(<div className="result">X{i + 1}={resultX[i].toFixed(15)}</div>) */
+        arr.push(<tr className='table'><td className='table'> X{i + 1}</td><td className='table'>{resultX[i].toFixed(15)}</td></tr>)
+    }
+
+
+
     return arr
 }
-export function Seidelcal(n, initialMatrix1, initialMatrix2,initialError) {
+export function Seidelcal(n, initialMatrix1, initialMatrix2, initialError) {
     //รอแก้
     let check = true;
-    let matrix1=initialMatrix1
-    let matrix2=initialMatrix2
-    
+    let matrix1 = initialMatrix1
+    let matrix2 = initialMatrix2
+
 
     let error = initialError
 
-    
+
     let arr = []
-    arr.push(<div className = "ontopresult"> คำตอบของการคำนวนคือ</div>)
+    arr.push(<tr className='table'>
+    <th className='table'>ตัวเเปรที่หา</th>
+    <th className='table'>Result</th>
+</tr>)
     let resultX = []
     let ansX = []
-    
-    let arr_Error = []
-    for(let i = 0 ; i < n ;i++){
-        resultX.push(0)
-        
-    }
-    
-    while(check){
 
-       
-        
-        
-        for(let i = 0;i <  n ;i++){
+    let arr_Error = []
+    for (let i = 0; i < n; i++) {
+        resultX.push(0)
+
+    }
+
+    while (check) {
+
+
+
+
+        for (let i = 0; i < n; i++) {
             let sum = matrix2[i]
-            for(let j = 0;j < n;j++){
-                if(i != j){
-                    
-                   
-                    sum = (sum- (matrix1[i][j]*resultX[j]))
-                    
-                    
-                    
+            for (let j = 0; j < n; j++) {
+                if (i != j) {
+
+
+                    sum = (sum - (matrix1[i][j] * resultX[j]))
+
+
+
                 }
-                
+
             }
-            
-            
-            ansX[i] = sum/matrix1[i][i];
-            
-            
-          
-            arr_Error[i] = math.abs((ansX[i]-resultX[i])/ansX[i])
+
+
+            ansX[i] = sum / matrix1[i][i];
+
+
+
+            arr_Error[i] = math.abs((ansX[i] - resultX[i]) / ansX[i])
             resultX[i] = ansX[i]
             //console.log(arr_Error[i])
-            
-           
+
+
         }
         resultX = [...ansX]
         check = false
-        for(let i = 0 ; i < n ; i++){
-            if(arr_Error[i] > error){
-               check = true
-               break;
+        for (let i = 0; i < n; i++) {
+            if (arr_Error[i] > error) {
+                check = true
+                break;
             }
-          
-            
-        }
-       
-    
-    }
-  
-    for(let i = 0 ; i < n ; i++){
-        //arr.push({key : i , x : 'X'+(i+1) , valuex : resultX[i].toFixed(5)})
-       
-        arr.push(<div className ="result">X{i+1}={resultX[i].toFixed(15)}</div>)
-    }
-     
 
-        
+
+        }
+
+
+    }
+
+    for (let i = 0; i < n; i++) {
+        //arr.push({key : i , x : 'X'+(i+1) , valuex : resultX[i].toFixed(5)})
+
+        /* arr.push(<div className="result">X{i + 1}={resultX[i].toFixed(15)}</div>) */
+        arr.push(<tr className='table'><td className='table'> X{i + 1}</td><td className='table'>{resultX[i].toFixed(15)}</td></tr>)
+    }
+
+
+
     return arr
 }
-export function calConjugate(n, initialMatrix1, initialMatrix2,initialError) {
+export function calConjugate(n, initialMatrix1, initialMatrix2, initialError) {
 
-    
+
     let A = initialMatrix1
 
     let B = initialMatrix2
-    
+
     let error = initialError
 
-  
-    
+
+
     let arr = []
-    arr.push(<div className = "ontopresult"> คำตอบของการคำนวนคือ</div>)
+    arr.push(<tr className='table'>
+    <th className='table'>ตัวเเปรที่หา</th>
+    <th className='table'>Result</th>
+</tr>)
     let X = []
-    
+
     let K = 0;
-    
+
     let checkError = 9999
 
-    for(let i = 0 ; i < n ;i++){
-       X.push(0)
-        
+    for (let i = 0; i < n; i++) {
+        X.push(0)
+
     }
-    
-    let R = math.multiply(A,X);
-    R = math.subtract(R,B);
-    let D = math.multiply(R,-1);
-    
+
+    let R = math.multiply(A, X);
+    R = math.subtract(R, B);
+    let D = math.multiply(R, -1);
+
     let lambda = null;
 
-    let alpha = null; 
+    let alpha = null;
 
-    while(checkError > error){
+    while (checkError > error) {
 
         lambda = math.transpose(D);
         let temp = lambda;
@@ -697,176 +748,185 @@ export function calConjugate(n, initialMatrix1, initialMatrix2,initialError) {
         D = math.multiply(R, -1);
         D = math.add(D, temp);
 
-       K++;
+        K++;
     }
-    
-    for(let i = 0 ; i < n ; i++){
+
+    for (let i = 0; i < n; i++) {
         //arr.push({key : i , x : 'X'+(i+1) , valuex : X[i].toFixed(5)})
-        arr.push(<div className ="result">X{i+1}={X[i].toFixed(15)}</div>)
-    }    
+        /* arr.push(<div className="result">X{i + 1}={X[i].toFixed(15)}</div>) */
+        arr.push(<tr className='table'><td className='table'> X{i + 1}</td><td className='table'>{X[i].toFixed(15)}</td></tr>)
+    }
     return arr
 }
-export function calNewtondevide( initialMatrix1, initialPoint,initialX) {
+export function calNewtondevide(initialMatrix1, initialPoint, initialX) {
     let A = initialMatrix1
 
     let P = initialPoint
-   
+
     let X = initialX
 
-    
+
 
     let arr = []
     let result = []
-    result.push(<tr className= 'table'>
+    result.push(<tr className='table'>
         <th className='table'>ค่าที่ต้องการหา</th>
         <th className='table'>result</th>
-        
+
     </tr>)
-   
-   for(let i = 0 ; i < P.length ; i++){
-           arr.push(A[parseInt(P[i])-1])
-   }
-  
-   console.log(arr.toString())
-   let findX = interpolationQuadratic_Poly_linear(arr)
 
-   
+    for (let i = 0; i < P.length; i++) {
+        arr.push(A[parseInt(P[i]) - 1])
+    }
 
-    
-   result.push(<tr className='table'><td className='table'>f({X})</td><td className='table'>{findX(X)}</td></tr>)
-   return result
+    console.log(arr.toString())
+    let findX = interpolationQuadratic_Poly_linear(arr)
+
+
+
+
+    result.push(<tr className='table'><td className='table'>f({X})</td><td className='table'>{findX(X)}</td></tr>)
+    return result
 }
 
-export function calLagrange(initialMatrix1,initialPoint,initialX){
-    
+export function calLagrange(initialMatrix1, initialPoint, initialX) {
+
 
     let A = initialMatrix1
 
     let P = initialPoint
-   
+
     let X = initialX
 
-    
+
 
     let arr = []
     let ans = []
-    ans.push(<div className = "ontopresult"> คำตอบของการคำนวนคือ</div>)
-   
-   for(let i = 0 ; i < P.length ; i++){
-           arr.push(A[parseInt(P[i])-1])
-   }
-   console.log(arr)
+    ans.push(<tr className='table'>
+    <th className='table'>ตัวเเปรที่หา</th>
+    <th className='table'>Result</th>
+</tr>)
 
-   //-----------------------------------------------------------//
-   let xs = []
-   let ys = []
+    for (let i = 0; i < P.length; i++) {
+        arr.push(A[parseInt(P[i]) - 1])
+    }
+    console.log(arr)
 
-	for(let i = 0 ; i < arr.length ; i++){
+    //-----------------------------------------------------------//
+    let xs = []
+    let ys = []
 
-		for(let j = 0 ; j < arr.length ; j++){
-				if(j == 0){
-					xs.push(arr[i][j])
-				}
-				else if(j == 1){
-					ys.push(arr[i][j])
-				}
-		}
-			
-	}
+    for (let i = 0; i < arr.length; i++) {
+
+        for (let j = 0; j < arr.length; j++) {
+            if (j == 0) {
+                xs.push(arr[i][j])
+            }
+            else if (j == 1) {
+                ys.push(arr[i][j])
+            }
+        }
+
+    }
     console.log(xs.length)
     console.log(ys.length)
     //--------------------------------------------------------//
     let ws = [];
-	let k = xs.length;
-	let w;
-	
-	for (let j = 0; j < k; ++j) {
-		w = 1;
-		for (var i = 0; i < k; ++i) {
-			if (i != j) {
-				w *= xs[j] - xs[i];
-			}
-		}
-		ws[j] = 1/w;
-	}
- //-----------------------------------------------------------//
-    let a = 0;
-	let b = 0;
-	let c = 0;
+    let k = xs.length;
+    let w;
 
-	for (let j = 0; j < xs.length; ++j) {
-		
-		if (X != xs[j]) {
-			
-			a = ws[j] / (X - xs[j]);
-			b += a * ys[j];
-			c += a;
-		} else {
+    for (let j = 0; j < k; ++j) {
+        w = 1;
+        for (var i = 0; i < k; ++i) {
+            if (i != j) {
+                w *= xs[j] - xs[i];
+            }
+        }
+        ws[j] = 1 / w;
+    }
+    //-----------------------------------------------------------//
+    let a = 0;
+    let b = 0;
+    let c = 0;
+
+    for (let j = 0; j < xs.length; ++j) {
+
+        if (X != xs[j]) {
+
+            a = ws[j] / (X - xs[j]);
+            b += a * ys[j];
+            c += a;
+        } else {
             //ans.push({key :  1 ,fx : 'f('+X+')' , valuex : ys[j] })
-            ans.push(<div className = "result">f({X}) = {ys[j]}</div>)
-			return ans;
+            ans.push(<div className="result">f({X}) = {ys[j]}</div>)
             
-			
-		}
-	}
-	
+            return ans;
+
+
+        }
+    }
+
 
 
     //ans.push({key :  1 ,fx : 'f('+X+')' , valuex : (b/c).toFixed(5) })
-	ans.push(<div className ="result">f({X}) = {(b/c).toFixed(5)}</div>)
+    /* ans.push(<div className="result">f({X}) = {(b / c).toFixed(5)}</div>) */
+    ans.push(<tr className='table'><td className='table'>f({X})</td><td className='table'>{(b / c).toFixed(5)}</td></tr>)
     return ans
 }
 
-export function calSpline(initialMatrix1,initialX){
-    
+export function calSpline(initialMatrix1, initialX) {
+
 
     let arr = initialMatrix1
 
-   
-   
+
+
     let X = initialX
 
-    
 
-    
+
+
     let ans = []
-    ans.push(<div className = "ontopresult"> คำตอบของการคำนวนคือ</div>)
-  
-
-   //-----------------------------------------------------------//
-   let xs = []
-   let ys = []
+    ans.push(<tr className='table'>
+    <th className='table'>ตัวเเปรที่หา</th>
+    <th className='table'>Result</th>
+</tr>)
 
 
+    //-----------------------------------------------------------//
+    let xs = []
+    let ys = []
 
-	for(let i = 0 ; i < arr.length ; i++){
 
-		for(let j = 0 ; j < arr.length ; j++){
-				if(j == 0){
-					xs.push(arr[i][j])
-				}
-				else if(j == 1){
-					ys.push(arr[i][j])
-				}
-		}
-			
-	}
 
-    const spline = new Spline(xs,ys)
-    
+    for (let i = 0; i < arr.length; i++) {
+
+        for (let j = 0; j < arr.length; j++) {
+            if (j == 0) {
+                xs.push(arr[i][j])
+            }
+            else if (j == 1) {
+                ys.push(arr[i][j])
+            }
+        }
+
+    }
+
+    const spline = new Spline(xs, ys)
+
 
     //ans.push({key :  1 ,fx : 'f('+X+')' , valuex : spline.at(X) })
-	ans.push(<div className ="result" >F({X}) = {spline.at(X)}</div>)
-
+    /* ans.push(<div className="result" >F({X}) = {spline.at(X)}</div>) */
+    ans.push(<tr className='table'><td className='table'>F({X})</td><td className='table'> {spline.at(X)}</td></tr>)
     return ans
 
 }
 
-export function calLinear(initialMatrix1,initialX,n){
-    
+export function calLinear(initialMatrix1, initialX, n) {
+
     let arr = initialMatrix1
-    for(let i = 0 ; i < n ; i++){
-        for(let j = 0 ; j < 2 ; j ++){
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < 2; j++) {
             arr[i][j] = parseInt(arr[i][j])
         }
     }
@@ -877,29 +937,35 @@ export function calLinear(initialMatrix1,initialX,n){
     const yIntercept = parseFloat(result.equation[1]);
     console.log(arr)
     console.log(X)
-     console.log(gradient)
-     console.log(yIntercept)
-    let ans = []
-    ans.push(<div className = "ontopresult"> คำตอบของการคำนวนคือ</div>)
-    //ans.push({key :  1 ,fx : 'f('+X+')' , valuex : (yIntercept + (gradient*X)).toFixed(5) })
-	ans.push(<div className ="result">f({X}) = {(yIntercept + (gradient*X)).toFixed(5)}</div>)
+    console.log(gradient)
+    console.log(yIntercept)
 
+    let ans = []
+    ans.push(<tr className='table'>
+    <th className='table'>ตัวเเปรที่หา</th>
+    <th className='table'>Result</th>
+</tr>)
+
+    
+    //ans.push({key :  1 ,fx : 'f('+X+')' , valuex : (yIntercept + (gradient*X)).toFixed(5) })
+    /* ans.push(<div className="result">f({X}) = {(yIntercept + (gradient * X)).toFixed(5)}</div>) */
+    ans.push(<tr className='table'><td className='table'>f({X})</td><td className='table'>{(yIntercept + (gradient * X)).toFixed(5)}</td></tr>)
     return ans
 
 }
 
 
-export function calPoly(initialMatrix1,initialX,n){
-    
+export function calPoly(initialMatrix1, initialX, n) {
+
     let arr = initialMatrix1
-    for(let i = 0 ; i < n ; i++){
-        for(let j = 0 ; j < 2 ; j ++){
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < 2; j++) {
             arr[i][j] = parseInt(arr[i][j])
         }
     }
 
-    
-   
+
+
     const result = regression.polynomial(arr);
     let X = initialX
     const a0 = parseFloat(result.equation[0]);
@@ -909,178 +975,187 @@ export function calPoly(initialMatrix1,initialX,n){
     console.log(a1)
     console.log(a2)
 
-    let ans = [] 
-    ans.push(<div className = "ontopresult"> คำตอบของการคำนวนคือ</div>)
-    let fx = a0+(a1*X)+(a2*(X*X))
+    let ans = []
+    ans.push(<tr className='table'>
+    <th className='table'>ตัวเเปรที่หา</th>
+    <th className='table'>Result</th>
+</tr>)
+    
+    let fx = a0 + (a1 * X) + (a2 * (X * X))
     //ans.push({key :  1 ,fx : 'f('+X+')' , valuex : fx.toFixed(5) })
     //ans.push(<div>f({X}) = {fx.toFixed(5)}</div>)
-    ans.push(<div className ="result">{'f( '+X+' ) = '} {fx.toFixed(5)}</div>)
+   /*  ans.push(<div className="result">{'f( ' + X + ' ) = '} {fx.toFixed(5)}</div>) */
+    ans.push(<tr className='table'><td className='table'>f({X})</td><td className='table'>{fx.toFixed(5)}</td></tr>)
     return ans
 
 }
 
-export function calMultiple(initialN,initialMatrix1,initialX1,initialX2,initialX3){
-    
+export function calMultiple(initialN, initialMatrix1, initialX1, initialX2, initialX3) {
+
     let n = initialN;
     let X1 = initialX1
     let X2 = initialX2
     let X3 = initialX3
     let A = initialMatrix1
-    for(let i = 0 ; i < n ; i++){
-        for(let j = 0 ; j < 4 ; j ++){
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < 4; j++) {
             A[i][j] = parseInt(A[i][j])
         }
     }
-      let x1 = []
-      let x2 = []
-      let x3 = []
-      let y = []
-      let sumx1 = 0
-      let sumx2 = 0
-      let sumx3 = 0
-      let sumy  = 0
-      for(let i = 0; i < n ; i++){
-          for(let j = 0 ; j < 4 ; j++){
-              if(j == 0){
+    let x1 = []
+    let x2 = []
+    let x3 = []
+    let y = []
+    let sumx1 = 0
+    let sumx2 = 0
+    let sumx3 = 0
+    let sumy = 0
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (j == 0) {
                 x1.push(A[i][j])
-                
-                 sumx1 +=  A[i][j]
-                
-              }
-              else if(j == 1){
+
+                sumx1 += A[i][j]
+
+            }
+            else if (j == 1) {
                 x2.push(A[i][j])
-               
-                sumx2 +=  A[i][j]
-                
-              }
-              else if(j == 2){
+
+                sumx2 += A[i][j]
+
+            }
+            else if (j == 2) {
                 x3.push(A[i][j])
-                 sumx3 +=  A[i][j]
-                
-              }
-              else if(j == 3){
+                sumx3 += A[i][j]
+
+            }
+            else if (j == 3) {
                 y.push(A[i][j])
-                 sumy += A[i][j]
-               
-              }
-          }
-      }
-    
-       console.log(x1.toString())
-       console.log(x2.toString())
-       console.log(x3.toString())
-       console.log(y.toString())
-       console.log(sumx1)
-       console.log(sumx2)
-       console.log(sumx3)
-       console.log(sumy)
-      function cal(matrix1,matrix2){
+                sumy += A[i][j]
+
+            }
+        }
+    }
+
+    console.log(x1.toString())
+    console.log(x2.toString())
+    console.log(x3.toString())
+    console.log(y.toString())
+    console.log(sumx1)
+    console.log(sumx2)
+    console.log(sumx3)
+    console.log(sumy)
+    function cal(matrix1, matrix2) {
         let summ = 0
-        for(let i = 0 ; i< n ; i++){
-             summ += (matrix1[i]*matrix2[i])
+        for (let i = 0; i < n; i++) {
+            summ += (matrix1[i] * matrix2[i])
         }
         return summ;
-      }
-    
-      let Xx = []
-      
-      Xx.push(x1)
-      Xx.push(x2)
-      Xx.push(x3)
-      Xx.push(y)
-      let arrSum = []
-      arrSum.push(sumx1)
-      arrSum.push(sumx2)
-      arrSum.push(sumx3)
-      arrSum.push(sumy)     
-    let B = []
-    
-    for (let i = 0; i < 4; i++) {
-      B.push([])
-      for (let j = 0; j < 4+1; j++) {
-        
-        if (i == 0 && j == 0) {
-          B[i][j] = 7
-        }
-        else if(i == 0){
-          
-           
-          
-            B[i][j] = arrSum[j-1]
-          
-         
-        }
-        else if(j == 0){
-          B[i][j] = arrSum[i-1]
-        }
-        else{
-          
-          
-            B[i][j] = cal(Xx[i-1], Xx[j-1])
-          
-         
-          
-        }
-        
-    
-    
-        }
-    
-      }
-      console.log(B)
-      
+    }
 
-      
-    let matrix1=B
-    
-    
-    
-    
+    let Xx = []
+
+    Xx.push(x1)
+    Xx.push(x2)
+    Xx.push(x3)
+    Xx.push(y)
+    let arrSum = []
+    arrSum.push(sumx1)
+    arrSum.push(sumx2)
+    arrSum.push(sumx3)
+    arrSum.push(sumy)
+    let B = []
+
+    for (let i = 0; i < 4; i++) {
+        B.push([])
+        for (let j = 0; j < 4 + 1; j++) {
+
+            if (i == 0 && j == 0) {
+                B[i][j] = 7
+            }
+            else if (i == 0) {
+
+
+
+                B[i][j] = arrSum[j - 1]
+
+
+            }
+            else if (j == 0) {
+                B[i][j] = arrSum[i - 1]
+            }
+            else {
+
+
+                B[i][j] = cal(Xx[i - 1], Xx[j - 1])
+
+
+
+            }
+
+
+
+        }
+
+    }
+    console.log(B)
+
+
+
+    let matrix1 = B
+
+
+
+
     let arr = []
-    arr.push(<div className = "ontopresult"> คำตอบของการคำนวนคือ</div>)
+    arr.push(<tr className='table'>
+    <th className='table'>ตัวเเปรที่หา</th>
+    <th className='table'>Result</th>
+</tr>)
     let X = []
-    
-    for(let i = 0 ; i < 4 ; i++){
-       
+
+    for (let i = 0; i < 4; i++) {
+
         X.push(1)
     }
     console.log(matrix1)
-   
-    for(let i = 1;i < 4 ; i++){
-        for(let j = i ;j < 4 ; j++){
 
-            let divide = matrix1[i-1][i-1]
-            let multi = matrix1[j][i-1]
+    for (let i = 1; i < 4; i++) {
+        for (let j = i; j < 4; j++) {
 
-            for(let k = i-1 ; k < 4+1;k++){
-                matrix1[j][k] = matrix1[j][k] - ((matrix1[i-1][k]/divide)*multi)
-                
+            let divide = matrix1[i - 1][i - 1]
+            let multi = matrix1[j][i - 1]
+
+            for (let k = i - 1; k < 4 + 1; k++) {
+                matrix1[j][k] = matrix1[j][k] - ((matrix1[i - 1][k] / divide) * multi)
+
             }
-    
+
         }
-         
+
     }
 
-    for(let i = 4-1 ;i >= 0 ; i--){
+    for (let i = 4 - 1; i >= 0; i--) {
         let sum = 0;
-        for(let j = 0 ; j < 4 ;j++){
-            sum = sum + matrix1[i][j]*X[j];
+        for (let j = 0; j < 4; j++) {
+            sum = sum + matrix1[i][j] * X[j];
         }
         sum = sum - matrix1[i][i]
-        X[i] = ((matrix1[i][4] - sum)/matrix1[i][i])
-        
+        X[i] = ((matrix1[i][4] - sum) / matrix1[i][i])
+
     }
     console.log(X[0])
     console.log(X[1])
     console.log(X[2])
     console.log(X[3])
 
-    
 
-    let fX = X[0] + X[1]*X1+X[2]*X2+X[3]*X3
+
+    let fX = X[0] + X[1] * X1 + X[2] * X2 + X[3] * X3
 
     //arr.push({key :  1 ,fx : 'Y' , valuex : fX.toFixed(5) })
-    arr.push(<div className ="result">Y = {fX.toFixed(5)}</div>)
+    /* arr.push(<div className="result">Y = {fX.toFixed(5)}</div>) */
+    arr.push(<tr className='table'><td className='table'>Y</td><td className='table'>{fX.toFixed(5)}</td></tr>)
     return arr
 
 

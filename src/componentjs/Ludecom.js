@@ -4,7 +4,10 @@ import { Button,Input } from 'antd';
 import { Row, Col } from 'antd';
 import { MatrixInputA, MatrixInputB } from './matrix/input_matrix'
 
-import { Ludecompocal } from './Rootcal'
+import { Ludecompocal,copyArray } from './Rootcal'
+import apis from '../api/index'
+import '../css/Root.css'
+import Modal_Example from '../model/model'
 
 class Ludecom extends React.Component {
     state =
@@ -17,6 +20,41 @@ class Ludecom extends React.Component {
             apiData: [],
             topre: "",
             hasData: false
+        }
+        async getData()
+        {
+            let tempData = null
+            await apis.getmatrix().then(res => {tempData = res.data})
+            this.setState({apiData: tempData})
+            this.setState({hasData: true})
+            /* console.log(tempData); */
+        }
+    
+        onClickOk = e =>{
+            this.setState({isModalVisible: false})
+        }
+    
+        onClickInsert = e =>{
+    /*         console.log(e.currentTarget);
+            console.log(e.target);
+            console.log(e.currentTarget.getAttribute('name'));
+            console.log(e.target.name); */
+            let index = e.currentTarget.getAttribute('name').split('_')
+                index = parseInt(index[1])
+                this.setState({
+                     
+                    matrixA: copyArray(this.state.apiData[index]["n"],this.state.apiData[index]["matrixA"]),
+                    matrixB: [...this.state.apiData[index]["matrixB"]],
+                    n: this.state.apiData[index]["n"],
+                    isModalVisible: false
+                })
+        }
+    
+        onClickExample = e =>{
+            if(!this.state.hasData){
+                this.getData()
+            }
+            this.setState({isModalVisible: true})
         }
     OnChangeMatrixA = e => {
         let changedArr = this.state.matrixA
@@ -58,6 +96,13 @@ class Ludecom extends React.Component {
 
         return (
             <div>
+                <Modal_Example
+                    visible={this.state.isModalVisible}
+                    onOk={this.onClickOk}
+                    hasData={this.state.hasData}
+                    apiData={this.state.apiData}
+                    onClick={this.onClickInsert}
+                />
                 
                 <div className='box'>
                 <h1 className='bisechead'>Lu Decomposition</h1>
@@ -79,10 +124,10 @@ class Ludecom extends React.Component {
                             </div>
                         </div>
                         <span><Button size="large" className='button1' type="primary" onClick={this.onPoom}>คำนวณ</Button></span>
-                        
+                        <Button size="large" type="primary" className="button1" onClick={this.onClickExample}>EX</Button>
                         <div>
+                            <table className='table'>{this.state.result}</table>
                             
-                            {this.state.result}
                         </div>
                     </div>
                 </div>

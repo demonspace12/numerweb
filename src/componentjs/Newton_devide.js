@@ -20,7 +20,8 @@ class Newton_devide extends React.Component {
     }
     async getData() {
         let tempData = null
-        await apis.getInter().then(res => { tempData = res.data })
+        await apis.getInter().then(res => { tempData = res.data
+        console.log(res.data) })
         this.setState({ apiData: tempData })
         this.setState({ hasData: true })
         
