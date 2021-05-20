@@ -71,24 +71,24 @@ class Lay extends React.Component {
                                     <Menu.Item key="5"><Link to='/componentjs/Secant'></Link>Secant</Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub2" title="matrix">
-                                    <Menu.Item key="6"><Link to='/componentjs/Cramer_r'></Link>Cramer</Menu.Item>
-                                    <Menu.Item key="7"><Link to='/componentjs/Gauss_em'></Link>Guass-Eli</Menu.Item>
-                                    <Menu.Item key="8"><Link to='/componentjs/Gauss_jordan'></Link>Gauss-jordan</Menu.Item>
-                                    <Menu.Item key="9"><Link to='/componentjs/Ludecom'></Link>LU-Decompo</Menu.Item>
-                                    <Menu.Item key="10"><Link to='/componentjs/Jacobi'></Link>Jacobi</Menu.Item>
-                                    <Menu.Item key="11"><Link to='/componentjs/Gauss_seidel'></Link>Gauss_seidel</Menu.Item>
-                                    <Menu.Item key="12"><Link to='/componentjs/Conjugate'></Link>Conjugate</Menu.Item>
+                                    <Menu.Item key="6"><Link to='/componentjs/Cramer_r'></Link>Cramer's Rule</Menu.Item>
+                                    <Menu.Item key="7"><Link to='/componentjs/Gauss_em'></Link>Guass-Eliminate Method</Menu.Item>
+                                    <Menu.Item key="8"><Link to='/componentjs/Gauss_jordan'></Link>Gauss-jordan Method</Menu.Item>
+                                    <Menu.Item key="9"><Link to='/componentjs/Ludecom'></Link>LU-Decomposition Method</Menu.Item>
+                                    <Menu.Item key="10"><Link to='/componentjs/Jacobi'></Link>Jacobi iteration method</Menu.Item>
+                                    <Menu.Item key="11"><Link to='/componentjs/Gauss_seidel'></Link>Gauss-seidel Iteration</Menu.Item>
+                                    <Menu.Item key="12"><Link to='/componentjs/Conjugate'></Link>Conjugate Gradient Method</Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub3" title="Interpolation">
-                                    <Menu.Item key="13"><Link to='/componentjs/Newton_devide'></Link>Newton-Devide</Menu.Item>
-                                    <Menu.Item key="14"><Link to='/componentjs/Lagrange'></Link>Lagrange</Menu.Item>
+                                    <Menu.Item key="13"><Link to='/componentjs/Newton_devide'></Link>Newton-Devide-differences</Menu.Item>
+                                    <Menu.Item key="14"><Link to='/componentjs/Lagrange'></Link>Lagrange polynomials</Menu.Item>
                                     <Menu.Item key="15"><Link to='/componentjs/Spline'></Link>Spline</Menu.Item>
 
                                 </SubMenu>
                                 <SubMenu key="sub4" title="Regresstion">
-                                    <Menu.Item key="16"><Link to='/componentjs/Linear'></Link>Linear</Menu.Item>
-                                    <Menu.Item key="17"><Link to='/componentjs/Polynomial'></Link>Polynomial</Menu.Item>
-                                    <Menu.Item key="18"><Link to='/componentjs/Multiple'></Link>Multiple</Menu.Item>
+                                    <Menu.Item key="16"><Link to='/componentjs/Linear'></Link>Linear Regression</Menu.Item>
+                                    <Menu.Item key="17"><Link to='/componentjs/Polynomial'></Link>Polynomial Regression</Menu.Item>
+                                    <Menu.Item key="18"><Link to='/componentjs/Multiple'></Link>Multiple Linear Regression</Menu.Item>
 
 
                                 </SubMenu>

@@ -117,10 +117,11 @@ th,td{
     font-size: 40px;
     background-color: black;
     color: #fff;
-    margin-top: 130px;
+    margin-top: 150px;
     width: 50%;
-    height: 70px;
+    height: 120px;
     margin-left: 25%;
+    padding-top: 18px;
 
 }
 .name{

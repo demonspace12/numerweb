@@ -17,9 +17,7 @@ class Home extends React.Component {
                <div className='web'>
                    <span>Numerical   WEB</span>
                </div>
-               <div className='name'>
-                   <span>สินพล จันทร์เศรษฐี</span>
-               </div>
+               
                 
                 
             </div>
