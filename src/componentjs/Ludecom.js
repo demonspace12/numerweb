@@ -16,10 +16,9 @@ class Ludecom extends React.Component {
             matrixA: [[], []],
             matrixB: [],
             result: "",
-            isModalVisible: false,
             apiData: [],
-            topre: "",
-            hasData: false
+            hasData: false,
+            Ex:0
         }
         async getData()
         {
@@ -27,20 +26,15 @@ class Ludecom extends React.Component {
             await apis.getmatrix().then(res => {tempData = res.data})
             this.setState({apiData: tempData})
             this.setState({hasData: true})
-            /* console.log(tempData); */
+            this.onClickInsert()
+            
         }
     
-        onClickOk = e =>{
-            this.setState({isModalVisible: false})
-        }
+        
     
-        onClickInsert = e =>{
-    /*         console.log(e.currentTarget);
-            console.log(e.target);
-            console.log(e.currentTarget.getAttribute('name'));
-            console.log(e.target.name); */
-            let index = e.currentTarget.getAttribute('name').split('_')
-                index = parseInt(index[1])
+        onClickInsert(){
+   
+            let index = this.state.Ex
                 this.setState({
                      
                     matrixA: copyArray(this.state.apiData[index]["n"],this.state.apiData[index]["matrixA"]),
@@ -54,7 +48,7 @@ class Ludecom extends React.Component {
             if(!this.state.hasData){
                 this.getData()
             }
-            this.setState({isModalVisible: true})
+            
         }
     OnChangeMatrixA = e => {
         let changedArr = this.state.matrixA
@@ -96,13 +90,7 @@ class Ludecom extends React.Component {
 
         return (
             <div>
-                <Modal_Example
-                    visible={this.state.isModalVisible}
-                    onOk={this.onClickOk}
-                    hasData={this.state.hasData}
-                    apiData={this.state.apiData}
-                    onClick={this.onClickInsert}
-                />
+                
                 
                 <div className='box'>
                 <h1 className='bisechead'>Lu Decomposition</h1>

@@ -113,11 +113,11 @@ class Lagrange extends React.Component {
                         <div>
                             ค่า X
                         </div>
-                        <Input className="matrixip" style={{ width: '150px' }} placeholder='Example = 40000' onChange={this.onChangeX} value={this.state.valueX} />
+                        <Input className="matrixip"  placeholder='Example = 40000' onChange={this.onChangeX} value={this.state.valueX} />
                         <div>
                             ใส่จำนวนจุดที่ต้องการ
                         </div>
-                        <Input className="matrixip" style={{ width: '150px' }} placeholder='Example = 1,2,3' onChange={this.onChangePoint} value={this.state.Point} />
+                        <Input className="matrixip"  placeholder='Example = 1,2,3' onChange={this.onChangePoint} value={this.state.Point} />
                         <br />
                         <Button size="large" className='button1' type="primary" onClick={this.onClickCalculator}>คำนวณ</Button>
                         <Button size="large" type="primary" className="button1" onClick={this.onClickExample}>EX</Button>

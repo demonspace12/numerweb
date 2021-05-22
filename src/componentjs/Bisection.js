@@ -23,6 +23,7 @@ class Bisection extends React.Component {
         isModalVisible: false,
         apiData: [],
         hasData: false,
+        Ex:0
     };
 
     async getData()
@@ -31,6 +32,7 @@ class Bisection extends React.Component {
         await apis.getRoot().then(res => {tempData = res.data})
         this.setState({apiData: tempData})
         this.setState({hasData: true})
+        this.onClickInsert()
         /* console.log(tempData); */
     }
 
@@ -38,13 +40,12 @@ class Bisection extends React.Component {
         this.setState({isModalVisible: false})
     }
 
-    onClickInsert = e =>{
+    onClickInsert(){
 /*         console.log(e.currentTarget);
         console.log(e.target);
         console.log(e.currentTarget.getAttribute('name'));
         console.log(e.target.name); */
-        let index = e.currentTarget.getAttribute('name').split('_')
-            index = parseInt(index[1])
+        let index = this.state.Ex
             this.setState({
                 FX: this.state.apiData[index]["equation"],
                 XL: this.state.apiData[index]["xl"],
@@ -57,7 +58,7 @@ class Bisection extends React.Component {
         if(!this.state.hasData){
             this.getData()
         }
-        this.setState({isModalVisible: true})
+      
     }
 
 
@@ -96,13 +97,7 @@ class Bisection extends React.Component {
                
                 <div className='box'>
                     <div>
-                    <Modal_Example
-                    visible = {this.state.isModalVisible}
-                    onOk = {this.onClickOk}
-                    hasData = {this.state.hasData}
-                    apiData = {this.state.apiData}
-                    onClick = {this.onClickInsert}
-                />
+                   
                     <h1 className='bisechead'>Bisection</h1>
                         <div>
                             

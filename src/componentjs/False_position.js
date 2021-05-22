@@ -23,6 +23,7 @@ class false_po extends React.Component {
         isModalVisible: false,
         apiData: [],
         hasData: false,
+        Ex:1
     };
 
     async getData() {
@@ -30,33 +31,29 @@ class false_po extends React.Component {
         await apis.getRoot().then(res => { tempData = res.data })
         this.setState({ apiData: tempData })
         this.setState({ hasData: true })
-        /* console.log(tempData); */
+        this.onClickInsert()
+        
     }
 
     onClickOk = e => {
         this.setState({ isModalVisible: false })
     }
 
-    onClickInsert = e => {
-        /*         console.log(e.currentTarget);
-                console.log(e.target);
-                console.log(e.currentTarget.getAttribute('name'));
-                console.log(e.target.name); */
-        let index = e.currentTarget.getAttribute('name').split('_')
-        index = parseInt(index[1])
+    onClickInsert() {
+        let index = this.state.Ex
         this.setState({
             FX: this.state.apiData[index]["equation"],
             XL: this.state.apiData[index]["xl"],
             XR: this.state.apiData[index]["xr"],
             ERROR: this.state.apiData[index]["error"],
-            isModalVisible: false
+            
         })
     }
     onClickExample = e => {
         if (!this.state.hasData) {
             this.getData()
         }
-        this.setState({ isModalVisible: true })
+        
     }
     getFX = e => {
         this.setState({
@@ -88,13 +85,7 @@ class false_po extends React.Component {
     render() {
         return (
             <div>
-                <Modal_Example
-                    visible={this.state.isModalVisible}
-                    onOk={this.onClickOk}
-                    hasData={this.state.hasData}
-                    apiData={this.state.apiData}
-                    onClick={this.onClickInsert}
-                />
+               
 
                 <div className='box'>
                     <h1 className='bisechead'>False-Position</h1>

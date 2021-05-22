@@ -6,7 +6,7 @@ import { InputMultiple } from './matrix/input_matrix'
 import { calMultiple,copyArray } from './Rootcal'
 import apis from '../api/index'
 import '../css/Root.css'
-import Modal_Example from '../model/model'
+
 class Multiple extends React.Component {
     state = {
         n: 2,
@@ -16,7 +16,8 @@ class Multiple extends React.Component {
         matrixA: [[], []],
         isModalVisible: false,
         apiData: [],
-        hasData: false
+        hasData: false,
+        Ex:2
 
     }
     async getData()
@@ -25,27 +26,21 @@ class Multiple extends React.Component {
         await apis.getRegession().then(res => {tempData = res.data})
         this.setState({apiData: tempData})
         this.setState({hasData: true})
-        /* console.log(tempData); */
+        this.onClickInsert()
+        
     }
 
-    onClickOk = e =>{
-        this.setState({isModalVisible: false})
-    }
+   
 
-    onClickInsert = e =>{
-/*         console.log(e.currentTarget);
-        console.log(e.target);
-        console.log(e.currentTarget.getAttribute('name'));
-        console.log(e.target.name); */
-        let index = e.currentTarget.getAttribute('name').split('_')
-            index = parseInt(index[1])
+    onClickInsert(){
+        let index = this.state.Ex
             this.setState({
                 matrixA: copyArray(this.state.apiData[index]["n"],this.state.apiData[index]["matrixA"]),
                 n: this.state.apiData[index]["n"],
                 valueX1: this.state.apiData[index]["x1"],
                 valueX2: this.state.apiData[index]["x2"],
                 valueX3: this.state.apiData[index]["x3"],
-                isModalVisible: false
+               
             })
     }
 
@@ -53,7 +48,7 @@ class Multiple extends React.Component {
         if(!this.state.hasData){
             this.getData()
         }
-        this.setState({isModalVisible: true})
+        
     }
 
     onChangeX1 = e => {
@@ -97,13 +92,7 @@ class Multiple extends React.Component {
         return (
 
             <div>
-                 <Modal_Example
-                    visible={this.state.isModalVisible}
-                    onOk={this.onClickOk}
-                    hasData={this.state.hasData}
-                    apiData={this.state.apiData}
-                    onClick={this.onClickInsert}
-                />
+                 
                 <div className='box'>
                     <h1 className="bisechead">Multi-linear Regression</h1>
 

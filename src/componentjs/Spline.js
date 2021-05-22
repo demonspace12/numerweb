@@ -112,7 +112,7 @@ class Spline extends React.Component {
                         <div>
                             ค่า X
                         </div>
-                        <Input className="matrixip" style={{ width: '150px' }} placeholder='Example = 40000' onChange={this.onChangeX} value={this.state.valueX} />
+                        <Input className="matrixip"  placeholder='Example = 40000' onChange={this.onChangeX} value={this.state.valueX} />
 
                         <br />
                         <Button size="large" className='button1' type="primary" onClick={this.onClickCalculator}>คำนวณ</Button>

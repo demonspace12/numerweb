@@ -11,7 +11,7 @@ export function copyArray(n, matrix1) {
     let arr = []
     for (let i = 0; i < n; i++) {
         arr.push([])
-        arr[i] = [].concat(matrix1[i])
+        arr[i] = [...matrix1[i]]
     }
     return arr;
 
@@ -369,8 +369,8 @@ export function Eliminationcal(n, initialMatrix1, initialMatrix2) {
 }
 export function Jordancal(n, initialMatrix1, initialMatrix2) {
 
-    let matrix1 = initialMatrix1
-    let matrix2 = initialMatrix2
+    let matrix1 = copyArray(n,initialMatrix1)
+    let matrix2 = [...initialMatrix2]
 
 
 
@@ -425,7 +425,7 @@ export function Jordancal(n, initialMatrix1, initialMatrix2) {
 
     //X.map((x,i) => arr.push({key : i , x : 'X'+(i+1) , valuex : x.toFixed(5)}))
     /*  X.map((x,i) => arr.push(<div>x{i+1}= {x.toFixed(15)}</div>)) */
-    X.map((x, i) => arr.push(<tr className='table'><td className='table'> x{i + 1}</td><td className='table'>{x.toFixed(15)}</td></tr>))
+    X.map((x, i) => arr.push(<tr className='table'><td className='table'> x{i + 1}</td><td className='table'>{x.toFixed(5)}</td></tr>))
 
     return arr
 }
