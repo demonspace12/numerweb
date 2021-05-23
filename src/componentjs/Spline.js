@@ -3,7 +3,7 @@ import React from 'react'
 import { Button, Input } from 'antd';
 
 import { InputXY } from './matrix/input_matrix'
-import { calSpline,copyArray } from './Rootcal'
+import { calSpline, copyArray } from './Rootcal'
 import apis from '../api/index'
 import '../css/Root.css'
 import Modal_Example from '../model/model'
@@ -12,39 +12,36 @@ import Modal_Example from '../model/model'
 
 class Spline extends React.Component {
     state = {
-        n: 2,
-        matrixA: [[], []],
+        n: 0,
+        m: 0,
+        matrixA: [],
         Point: [],
         valueX: '',
         data: "",
         isModalVisible: false,
         apiData: [],
-        hasData: false
+        hasData: false,
+        Ex: 2
     }
     async getData() {
         let tempData = null
         await apis.getInter().then(res => { tempData = res.data })
         this.setState({ apiData: tempData })
         this.setState({ hasData: true })
-        /* console.log(tempData); */
+        this.onClickInsert()
+
     }
 
-    onClickOk = e => {
-        this.setState({ isModalVisible: false })
-    }
 
-    onClickInsert = e => {
-        /*         console.log(e.currentTarget);
-                console.log(e.target);
-                console.log(e.currentTarget.getAttribute('name'));
-                console.log(e.target.name); */
-        let index = e.currentTarget.getAttribute('name').split('_')
-        index = parseInt(index[1])
+
+    onClickInsert() {
+
+        let index = this.state.Ex
         this.setState({
             matrixA: copyArray(this.state.apiData[index]["n"], this.state.apiData[index]["matrixA"]),
             n: this.state.apiData[index]["n"],
             valueX: this.state.apiData[index]["x"],
-            isModalVisible: false
+
         })
     }
 
@@ -52,7 +49,7 @@ class Spline extends React.Component {
         if (!this.state.hasData) {
             this.getData()
         }
-        this.setState({ isModalVisible: true })
+
     }
 
     onChangeX = e => {
@@ -77,17 +74,18 @@ class Spline extends React.Component {
 
 
     }
-    onClickmatrixadd = (e) => {
-        if (this.state.n < 10) {
-            this.setState({ n: this.state.n += 1 })
+
+    onClickcreate = e => {
+        this.setState({ n: this.state.m })
+    }
+    oncreate = e => {
+        let num = e.target.value
+        for (let i = 0; i < num; i++) {
             this.state.matrixA.push([])
         }
-    }
-    onClickmatrixdel = (e) => {
-        if (this.state.n > 2) {
-            this.setState({ n: this.state.n -= 1 })
-            this.state.matrixA.pop([])
-        }
+
+        this.setState({ m: num })
+
     }
     onClickCalculator = (e) => {
         this.setState({ data: calSpline(this.state.matrixA, this.state.valueX) })
@@ -96,23 +94,20 @@ class Spline extends React.Component {
 
         return (
             <div>
-                <Modal_Example
-                    visible={this.state.isModalVisible}
-                    onOk={this.onClickOk}
-                    hasData={this.state.hasData}
-                    apiData={this.state.apiData}
-                    onClick={this.onClickInsert}
-                />
+
                 <div className='box'>
                     <h1 className="bisechead">Spline</h1>
-                    <Button className='ad' type="primary" onClick={this.onClickmatrixdel}> Delete </Button>
-                    <Button className='ad' type="primary" onClick={this.onClickmatrixadd}> Add </Button>
+                    
+                    <Input className='sizeshow' onChange={this.oncreate} value={this.state.m} />
+                    <Button className='button1' onClick={this.onClickcreate}>Create</Button><br/>
+                    <span>X :</span><span className='margin'>Y :</span>
                     <div>
-                        <InputXY n={this.state.n} onChange={this.onChangematrixXY} value={this.state.matrixA} />
+                       
+                        <InputXY n={this.state.n} onChange={this.onChangematrixXY} value={this.state.matrixA} /><br/>
                         <div>
                             ค่า X
                         </div>
-                        <Input className="matrixip"  placeholder='Example = 40000' onChange={this.onChangeX} value={this.state.valueX} />
+                        <Input className="matrixip" placeholder='Example = 40000' onChange={this.onChangeX} value={this.state.valueX} />
 
                         <br />
                         <Button size="large" className='button1' type="primary" onClick={this.onClickCalculator}>คำนวณ</Button>

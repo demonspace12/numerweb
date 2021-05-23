@@ -12,8 +12,9 @@ import '../css/Root.css'
 
 class Linear extends React.Component {
     state = {
-        n: 2,
-        matrixA: [[], []],
+        n: 0,
+        m:0,
+        matrixA: [],
         Point: [],
         valueX: '',
         data: "",
@@ -72,17 +73,17 @@ class Linear extends React.Component {
 
 
     }
-    onClickmatrixadd = (e) => {
-        if (this.state.n < 10) {
-            this.setState({ n: this.state.n += 1 })
+    onClickcreate = e => {
+        this.setState({ n: this.state.m })
+    }
+    oncreate = e => {
+        let num = e.target.value
+        for (let i = 0; i < num; i++) {
             this.state.matrixA.push([])
         }
-    }
-    onClickmatrixdel = (e) => {
-        if (this.state.n > 2) {
-            this.setState({ n: this.state.n -= 1 })
-            this.state.matrixA.pop([])
-        }
+
+        this.setState({ m: num })
+
     }
     onClickCalculator = (e) => {
         this.setState({ data: calLinear(this.state.matrixA, this.state.valueX) })
@@ -94,10 +95,11 @@ class Linear extends React.Component {
                
                 <div className='box'>
                     <h1 className="bisechead">Linear</h1>
-                    <Button className='ad' type="primary" onClick={this.onClickmatrixdel}> Delete </Button>
-                    <Button className='ad' type="primary" onClick={this.onClickmatrixadd}> Add </Button>
+                    <Input className='sizeshow' onChange={this.oncreate} value={this.state.m} />
+                    <Button className='button1' onClick={this.onClickcreate}>Create</Button><br/>
+                    <span>X :</span><span className='margin'>Y :</span>
                     <div>
-                        <InputXY n={this.state.n} onChange={this.onChangematrixXY} value={this.state.matrixA} />
+                        <InputXY n={this.state.n} onChange={this.onChangematrixXY} value={this.state.matrixA} /><br/>
                         <div>
                             ค่า X
                         </div>

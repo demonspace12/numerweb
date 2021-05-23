@@ -5,14 +5,16 @@ import { MatrixInputA, MatrixInputB } from './matrix/input_matrix'
 import { Cramercal, copyArray } from './Rootcal'
 import apis from '../api/index'
 import '../css/Root.css'
-import Modal_Example from '../model/model'
+
 
 class Cramer_r extends React.Component {
 
     state =
         {
-            n: 2,
-            matrixA: [[], []],
+            n:0,
+            m:0,
+            matrixA: [],
+          
             matrixB: [],
             result: "",
             isModalVisible: false,
@@ -40,7 +42,7 @@ class Cramer_r extends React.Component {
         })
     }
 
-    onClickExample = e => {
+    onClickExample=e=>{
         if (!this.state.hasData) {
             this.getData()
         }
@@ -62,21 +64,23 @@ class Cramer_r extends React.Component {
         this.setState({ matrixB: changedArr })
     }
 
-    onClickAdd = e => {
-        if (this.state.n < 6) {
+    
+    onClickcreate=e=>{
+        this.setState({n:this.state.m})
+    }
+    oncreate=e=>{
+        let num =e.target.value
+        for(let i =0;i<num;i++){
             this.state.matrixA.push([])
-            this.setState({ n: this.state.n + 1 })
         }
+
+        this.setState({m:num})
+
     }
 
-    onClickDel = e => {
-        if (this.state.n > 2) {
-            this.state.matrixA.pop()
-            this.setState({ n: this.state.n - 1 })
-        }
-    }
+    
 
-    onPoom = e => {
+    Calculater = e => {
         this.setState({
             result: Cramercal(this.state.n, this.state.matrixA, this.state.matrixB)
         });
@@ -90,10 +94,9 @@ class Cramer_r extends React.Component {
                 <div className='box'>
                     <h1 className='bisechead'>Cramer Rule</h1>
                     <div>
-                        <Button onClick={this.onClickDel} >Del</Button>
-                        <Input className='sizeshow' value={this.state.n} />
-
-                        <Button onClick={this.onClickAdd}>Add</Button><br />
+                        
+                        <Input className='sizeshow' onChange={this.oncreate} value={this.state.m} />
+                        <Button  className='button1' onClick={this.onClickcreate}>Create</Button>
                         <div className='flex'>
                             <div>
                                 <div className='top'>matrixA</div>
@@ -106,7 +109,7 @@ class Cramer_r extends React.Component {
                                 <MatrixInputB n={this.state.n} onChange={this.OnChangeMatrixB} value={this.state.matrixB} />
                             </div>
                         </div>
-                        <span><Button size="large" type="primary" className='button1' onClick={this.onPoom}>คำนวณ</Button></span>
+                        <span><Button size="large" type="primary" className='button1' onClick={this.Calculater}>คำนวณ</Button></span>
                         <Button size="large" type="primary" className="button1" onClick={this.onClickExample}>EX</Button>
 
                         <div>

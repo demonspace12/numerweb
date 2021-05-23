@@ -11,34 +11,29 @@ import Modal_Example from '../model/model'
 
 class Lagrange extends React.Component {
     state = {
-        n: 2,
-        matrixA: [[], []],
+        n: 0,
+        m:0,
+        matrixA: [],
         Point: [],
         valueX: '',
         data: "",
         isModalVisible: false,
         apiData: [],
-        hasData: false
+        hasData: false,
+        Ex:1
     }
     async getData() {
         let tempData = null
         await apis.getInter().then(res => { tempData = res.data })
         this.setState({ apiData: tempData })
         this.setState({ hasData: true })
-        /* console.log(tempData); */
+       this.onClickInsert()
     }
 
-    onClickOk = e => {
-        this.setState({ isModalVisible: false })
-    }
+  
 
-    onClickInsert = e => {
-        /*         console.log(e.currentTarget);
-                console.log(e.target);
-                console.log(e.currentTarget.getAttribute('name'));
-                console.log(e.target.name); */
-        let index = e.currentTarget.getAttribute('name').split('_')
-        index = parseInt(index[1])
+    onClickInsert() {
+        let index = this.state.Ex
         this.setState({
             matrixA: copyArray(this.state.apiData[index]["n"], this.state.apiData[index]["matrixA"]),
             Point: [...this.state.apiData[index]["point"]],
@@ -52,7 +47,7 @@ class Lagrange extends React.Component {
         if (!this.state.hasData) {
             this.getData()
         }
-        this.setState({ isModalVisible: true })
+        
     }
 
     onChangeX = e => {
@@ -77,17 +72,18 @@ class Lagrange extends React.Component {
 
 
     }
-    onClickmatrixadd = (e) => {
-        if (this.state.n < 10) {
-            this.setState({ n: this.state.n += 1 })
+    
+    onClickcreate = e => {
+        this.setState({ n: this.state.m })
+    }
+    oncreate = e => {
+        let num = e.target.value
+        for (let i = 0; i < num; i++) {
             this.state.matrixA.push([])
         }
-    }
-    onClickmatrixdel = (e) => {
-        if (this.state.n > 2) {
-            this.setState({ n: this.state.n -= 1 })
-            this.state.matrixA.pop([])
-        }
+
+        this.setState({ m: num })
+
     }
     onClickCalculator = (e) => {
         this.setState({ data: calLagrange(this.state.matrixA, this.state.Point, this.state.valueX) })
@@ -97,19 +93,14 @@ class Lagrange extends React.Component {
         return (
             
             <div className="newtondevide">
-                <Modal_Example
-                    visible={this.state.isModalVisible}
-                    onOk={this.onClickOk}
-                    hasData={this.state.hasData}
-                    apiData={this.state.apiData}
-                    onClick={this.onClickInsert}
-                />
+               
                 <div className='box'>
                     <h1 className="bisechead">Lagrange</h1>
-                    <Button className='ad' type="primary" onClick={this.onClickmatrixdel}> Delete </Button>
-                    <Button className='ad' type="primary" onClick={this.onClickmatrixadd}> Add </Button>
+                    <Input className='sizeshow' onChange={this.oncreate} value={this.state.m} />
+                    <Button className='button1' onClick={this.onClickcreate}>Create</Button><br/>
+                    <span>X :</span><span className='margin'>Y :</span>
                     <div>
-                        <InputXY n={this.state.n} onChange={this.onChangematrixXY} value={this.state.matrixA} />
+                        <InputXY n={this.state.n} onChange={this.onChangematrixXY} value={this.state.matrixA} /><br/>
                         <div>
                             ค่า X
                         </div>

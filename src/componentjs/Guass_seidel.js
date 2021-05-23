@@ -4,7 +4,7 @@ import { Button, Input } from 'antd';
 import { Row, Col } from 'antd';
 import { MatrixInputA, MatrixInputB } from './matrix/input_matrix'
 
-import { Seidelcal,copyArray } from './Rootcal'
+import { Seidelcal, copyArray } from './Rootcal'
 import apis from '../api/index'
 import '../css/Root.css'
 
@@ -12,46 +12,46 @@ import '../css/Root.css'
 class Gauss_seidel extends React.Component {
     state =
         {
-            n: 2,
-            matrixA: [[], []],
+            n: 0,
+            m: 0,
+            matrixA: [],
             matrixB: [],
             result: "",
             isModalVisible: false,
             apiData: [],
             hasData: false,
-            Ex:1
+            Ex: 1
         }
-        async getData()
-        {
-            let tempData = null
-            await apis.getmatrix().then(res => {tempData = res.data})
-            this.setState({apiData: tempData})
-            this.setState({hasData: true})
-            this.onClickInsert()
+    async getData() {
+        let tempData = null
+        await apis.getmatrix().then(res => { tempData = res.data })
+        this.setState({ apiData: tempData })
+        this.setState({ hasData: true })
+        this.onClickInsert()
+    }
+
+    onClickOk = e => {
+        this.setState({ isModalVisible: false })
+    }
+
+    onClickInsert() {
+
+        let index = this.state.Ex
+        this.setState({
+            matrixA: copyArray(this.state.apiData[index]["n"], this.state.apiData[index]["matrixA"]),
+            matrixB: [...this.state.apiData[index]["matrixB"]],
+            n: this.state.apiData[index]["n"],
+            ERROR: this.state.apiData[index]["error"],
+
+        })
+    }
+
+    onClickExample = e => {
+        if (!this.state.hasData) {
+            this.getData()
         }
-    
-        onClickOk = e =>{
-            this.setState({isModalVisible: false})
-        }
-    
-        onClickInsert(){
- 
-            let index = this.state.Ex
-                this.setState({
-                    matrixA: copyArray(this.state.apiData[index]["n"],this.state.apiData[index]["matrixA"]),
-                    matrixB: [...this.state.apiData[index]["matrixB"]],
-                    n: this.state.apiData[index]["n"],
-                    ERROR : this.state.apiData[index]["error"],
-                    
-                })
-        }
-    
-        onClickExample = e =>{
-            if(!this.state.hasData){
-                this.getData()
-            }
-            
-        }
+
+    }
     getERROR = e => {
         this.setState({
             ERROR: e.target.value,
@@ -73,18 +73,17 @@ class Gauss_seidel extends React.Component {
         this.setState({ matrixB: changedArr })
     }
 
-    onClickAdd = e => {
-        if (this.state.n < 6) {
-            this.state.matrixA.push([])
-            this.setState({ n: this.state.n + 1 })
-        }
+    onClickcreate = e => {
+        this.setState({ n: this.state.m })
     }
-
-    onClickDel = e => {
-        if (this.state.n > 2) {
-            this.state.matrixA.pop()
-            this.setState({ n: this.state.n - 1 })
+    oncreate = e => {
+        let num = e.target.value
+        for (let i = 0; i < num; i++) {
+            this.state.matrixA.push([])
         }
+
+        this.setState({ m: num })
+
     }
 
     onPoom = e => {
@@ -97,15 +96,13 @@ class Gauss_seidel extends React.Component {
 
         return (
             <div>
-                
+
 
                 <div className='box'>
                     <h1 className='bisechead'>Gauss-seidel</h1>
                     <div>
-                        <Button onClick={this.onClickDel} >Del</Button>
-                        <Input className='sizeshow' value={this.state.n} />
-
-                        <Button onClick={this.onClickAdd}>Add</Button>
+                        <Input className='sizeshow' onChange={this.oncreate} value={this.state.m} />
+                        <Button className='button1' onClick={this.onClickcreate}>Create</Button>
                         <div className='flex'>
                             <div>
                                 <div className='top'>matrixB</div>

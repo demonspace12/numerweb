@@ -10,8 +10,9 @@ import Modal_Example from '../model/model'
 class Conjugate extends React.Component {
     state =
         {
-            n: 2,
-            matrixA: [[], []],
+            n: 0,
+            m: 0,
+            matrixA: [],
             matrixB: [],
             result: "",
             isModalVisible: false,
@@ -69,18 +70,17 @@ class Conjugate extends React.Component {
         this.setState({ matrixB: changedArr })
     }
 
-    onClickAdd = e => {
-        if (this.state.n < 6) {
-            this.state.matrixA.push([])
-            this.setState({ n: this.state.n + 1 })
-        }
+    onClickcreate = e => {
+        this.setState({ n: this.state.m })
     }
-
-    onClickDel = e => {
-        if (this.state.n > 2) {
-            this.state.matrixA.pop()
-            this.setState({ n: this.state.n - 1 })
+    oncreate = e => {
+        let num = e.target.value
+        for (let i = 0; i < num; i++) {
+            this.state.matrixA.push([])
         }
+
+        this.setState({ m: num })
+
     }
 
     onPoom = e => {
@@ -99,10 +99,8 @@ class Conjugate extends React.Component {
                     <h1 className='bisechead'>Conjugate</h1>
                     <div>
                         <div>
-                            <Button onClick={this.onClickDel} >Del</Button>
-                            <Input className='sizeshow' value={this.state.n} />
-
-                            <Button onClick={this.onClickAdd}>Add</Button>
+                        <Input className='sizeshow' onChange={this.oncreate} value={this.state.m} />
+                        <Button className='button1' onClick={this.onClickcreate}>Create</Button>
                             <div className='flex'>
                                 <div>
                                     <div className='top'>matrixB</div>

@@ -105,7 +105,7 @@ th,td{
 }
 .sizeshow{
     width: 50px;
-    margin: 0 5px;
+    
     text-align: center;
 }
 .swager{
@@ -137,4 +137,7 @@ th,td{
 }
 .homeweb{
     text-align: center;
+}
+.margin{
+    margin-left: 90px;
 }

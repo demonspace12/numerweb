@@ -777,9 +777,10 @@ export function calNewtondevide(initialMatrix1, initialPoint, initialX) {
 
     for (let i = 0; i < P.length; i++) {
         arr.push(A[parseInt(P[i]) - 1])
+        console.log(A[parseInt(P[i]) - 1])
     }
 
-    console.log(arr.toString())
+    console.log(arr)
     let findX = interpolationQuadratic_Poly_linear(arr)
 
 
@@ -828,8 +829,8 @@ export function calLagrange(initialMatrix1, initialPoint, initialX) {
         }
 
     }
-    console.log(xs.length)
-    console.log(ys.length)
+    console.log(xs)
+    console.log(ys)
     //--------------------------------------------------------//
     let ws = [];
     let k = xs.length;
