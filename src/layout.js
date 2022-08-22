@@ -30,16 +30,6 @@ import Swagers from './model/swager'
 import Home from './componentjs/Home';
 
 import './css/layout.css';
-
-
-
-
-
-
-
-
-
-
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 class Lay extends React.Component {
